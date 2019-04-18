@@ -1,0 +1,17 @@
+/* *{
+	display: block;
+} */
+img{
+	width: 100px;
+	height: 100px;
+}
+ul>ul{
+	list-style: none;
+	padding: 0;
+}
+ul>li{
+	color: red;
+}
+a{
+	color: red;
+}
