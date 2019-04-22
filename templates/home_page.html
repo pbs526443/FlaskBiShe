@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css"/>
+		<script src="../static/js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../static/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.login_ul{
+				list-style: none;
+			}
+			a:link{
+				text-decoration: none;
+			}
+			.LTAB{
+				margin-top: 70px;
+			}
+			h2{
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container" style="width: 1170px;height: 69px;">
+				<div class="row">
+					<div class="col-md-4 col-xs-4">
+						<h1 style="text-align: left; color: #b4b5ba;">星空学院欢迎你</h1>
+					</div>
+					<div class="col-md-8 col-xs-8">
+						<ul class="login_ul">
+							<div class="col-md-3 col-xs-3 col-md-offset-3 col-xs-offset-3">
+								<li>
+									<h3><a href="#">欢迎你</a></h3>
+								</li>
+							</div>
+							<div class="col-md-3 col-xs-3">
+								<li>
+									<h3><a href="#">个人中心</a></h3>
+								</li>
+							</div>
+							<div class="col-md-3 col-xs-3">
+								<li>
+									<h3><a href="#">退出登录</a></h3>
+								</li>
+							</div>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<div class="container LTAB">
+			<div class="col-md-2 col-xs-2 text-center">
+				<ul class="nav nav-pills nav-stacked " role="tablist" id="vtab">
+					<li role="presentation" class="active">
+						<a href="#tab1" aria-controls="home" role="tab" data-toggle="tab">
+							<h3>公告栏目</h3>
+						</a>
+					</li>
+					<li role="presentation">
+						<a href="#tab2" aria-controls="inbox" role="tab" data-toggle="tab">
+							<h3>财务管理</h3>
+						</a>
+					</li>
+					<li role="presentation">
+						<a href="#tab3" aria-controls="outbox" role="tab" data-toggle="tab">
+							<h3>留校管理</h3>
+						</a>
+					</li>
+					<li role="presentation">
+						<a href="#tab4" aria-controls="inbox1" role="tab" data-toggle="tab">
+							<h3>成绩查询</h3>
+						</a>
+					</li>
+					<li role="presentation">
+						<a href="#tab5" aria-controls="outbox1" role="tab" data-toggle="tab">
+							<h3>图像</h3>
+						</a>
+					</li>
+					<li role="presentation">
+						<a href="#tab6" aria-controls="outbox1" role="tab" data-toggle="tab">
+							<h3>事件</h3>
+						</a>
+					</li>
+					<li role="presentation">
+						<a href="#tab7" aria-controls="outbox1" role="tab" data-toggle="tab">
+							<h3>存储</h3>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="tab-content vertical-tab-content col-md-10 col-xs-10">
+				<div role="tabpanel" class="tab-pane active" id="tab1">
+					<div class="panel panel-primary">
+						<div class="panel-heading"> <h2>最新公告</h2> </div>
+						<div class="panel-body">
+							<h3>
+								Bootstrap是美国Twitter公司的设计师Mark Otto和Jacob Thornton合作基于HTML、CSS、JavaScript 开发的简洁、直观、强悍的前端开发框架，使得 Web 开发更加快捷。
+								Bootstrap提供了优雅的HTML和CSS规范，它即是由动态CSS语言Less写成。
+								Bootstrap一经推出后颇受欢迎，一直是GitHub上的热门开源项目，包括NASA的MSNBC（微软全国广播公司）的Breaking News都使用了该项目。
+								国内一些移动开发者较为熟悉的框架，如WeX5前端开源框架等，也是基于Bootstrap源码进行性能优化而来。
+							</h3>
+						</div>
+						<div class="panel-footer text-right"> <h3> ------pbs </h3> </div>
+					</div>
+				</div>
+				<div role="tabpanel" class="tab-pane" id="tab2">
+					<table class="table table-bordered table-hover table-striped">
+						<tr>
+							<th> <h4>编号</h4></th>
+							<th><h4>学费</h4></th>
+							<th><h4>书费</h4></th>
+						</tr>
+						{% if finance %}
+							{% for result in finance %}
+								<tr>
+									<th><h4>{{result.id}}</h4></th>
+									<th><h4>{{result.user_xuefei}}</h4></th>
+									<th><h4>{{result.user_shufei}}</h4></th>
+								</tr>
+							{% endfor %}
+						{% else %}
+							<tr>
+								<th><h4>1.</h4></th>
+								<th><h4>没有学费</h4></th>
+								<th><h4>没有书费</h4></th>
+							</tr>
+						{% endif %}
+					</table>
+				</div>
+				<div role="tabpanel" class="tab-pane" id="tab3">
+					<table class="table table-bordered table-hover table-striped">
+						<tr>
+							<th> <h4>姓名</h4></th>
+							<th><h4>理由</h4></th>
+							<th><h4>状态</h4></th>
+						</tr>
+						{% if liuxiao %}
+							{% for result in liuxiao %}
+								<tr>
+									<th><h4>{{result.user_name}}</h4></th>
+									<th><h4>{{result.user_liyou}}</h4></th>
+									<th><h4>{{result.user_ztai}}</h4></th>
+								</tr>
+							{% endfor %}
+						{% else %}
+							<tr>
+								<h4>还没有申请</h4>
+							</tr>
+						{% endif %}
+					</table>
+				</div>
+				<div role="tabpanel" class="tab-pane" id="tab4">这是.视音频..</div>
+				<div role="tabpanel" class="tab-pane" id="tab5">这是..图像.</div>
+				<div role="tabpanel" class="tab-pane" id="tab6">这是..事件.</div>
+				<div role="tabpanel" class="tab-pane" id="tab7">这是..存储.</div>
+			</div>
+		</div>
+		
+	</body>
+</html>
