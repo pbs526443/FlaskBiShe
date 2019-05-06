@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %} 添加成功 {% endblock %}
+{% block content %}
+<div class="div_logind" style="margin-top: 70px; padding-top: 150px;">
+			<div class="container">
+				<div class="btn-group" style="width: 1140px; height: 650px; text-align: center;">
+					<form action="/" method="post">
+						<ul class="list-group col-md-8 col-md-offset-1  col-xs-8 col-xs-offset-1">
+							<li class="list-group-item" style="width: 800px;">
+								<h1>添加成功</h1>
+							</li>
+							<li class="list-group-item" style="width: 800px;">
+                                <a href="/{{url}}" class="btn btn-primary btn-lg" style="width: 50%">继续添加</a><a href="/admin_page" class="btn btn-info btn-lg" style="width: 50%">返回首页</a>
+							</li>
+						</ul>
+					</form>
+				</div>
+			</div>
+		</div>
+{% endblock %}

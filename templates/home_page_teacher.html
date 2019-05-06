@@ -1,18 +1,39 @@
-{% extends "base.html" %}
-{% block grzx %}
-<div class="col-md-3 col-xs-3 col-md-offset-3 col-xs-offset-3">
-	<li>
-		<h3><a href="#">欢迎你--{{name}}</a></h3>
-	</li>
-</div>
-<div class="col-md-3 col-xs-3">
-	<li>
-		<h3><a href="/user_personal">个人中心</a></h3>
-	</li>
-</div>
-{% endblock %}
-{% block content %}
-		<div class="container LTAB">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container" style="width: 1170px;height: 69px;">
+				<div class="row">
+					<div class="col-md-4 col-xs-4">
+						<h1 style="text-align: left; color: #b4b5ba;">星空学院欢迎你</h1>
+					</div>
+					<div class="col-md-8 col-xs-8">
+						<ul class="login_ul">
+							<div class="col-md-3 col-xs-3 col-md-offset-3 col-xs-offset-3">
+								<li>
+									<h3><a href="#">欢迎你</a></h3>
+								</li>
+							</div>
+							<div class="col-md-3 col-xs-3">
+								<li>
+									<h3><a href="#">个人中心</a></h3>
+								</li>
+							</div>
+							<div class="col-md-3 col-xs-3">
+								<li>
+									<h3><a href="#">退出登录</a></h3>
+								</li>
+							</div>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</nav>
+    <div class="container LTAB">
 			<div class="col-md-2 col-xs-2 text-center">
 				<ul class="nav nav-pills nav-stacked " role="tablist" id="vtab">
 					<li role="presentation" class="active">
@@ -47,7 +68,7 @@
 					</li>
 					<li role="presentation">
 						<a href="#tab7" aria-controls="outbox1" role="tab" data-toggle="tab">
-							<h3>修改密码</h3>
+							<h3>存储</h3>
 						</a>
 					</li>
 				</ul>
@@ -77,7 +98,7 @@
 						{% if finance %}
 							{% for result in finance %}
 								<tr>
-									<th><h4>{{loop.index}}</h4></th>
+									<th><h4>{{result.id}}</h4></th>
 									<th><h4>{{result.user_xuefei}}</h4></th>
 									<th><h4>{{result.user_shufei}}</h4></th>
 								</tr>
@@ -116,36 +137,8 @@
 				<div role="tabpanel" class="tab-pane" id="tab4">这是.视音频..</div>
 				<div role="tabpanel" class="tab-pane" id="tab5">这是..图像.</div>
 				<div role="tabpanel" class="tab-pane" id="tab6">这是..事件.</div>
-				<div role="tabpanel" class="tab-pane" id="tab7">
-					<div class="div_logind" style="margin-top: 40px;">
-						<div class="container">
-							<div class="btn-group" style="text-align: center;">
-								<form action="/user_updatepassword" method="post">
-									<ul class="list-group col-md-8 col-xs-8 col-md-offset-2 col-xs-offset-2">
-										<li class="list-group-item" style="width: 555px;">
-											<h1>修改密码界面</h1>
-										</li>
-										<li class="list-group-item" style="width: 555px;">
-											<div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
-												<span class="input-group-addon">原密码</span>
-												<input type="text" class="form-control input-lg" name="password" placeholder="请输入您的原密码"/>
-											</div>
-										</li>
-										<li class="list-group-item" style="width: 555px;">
-											<div class="input-group col-md-8 col-md-offset-2  col-xs-8 col-xs-offset-2">
-												<span class="input-group-addon">新密码</span>
-												<input type="password" class="form-control input-lg" name="password1" placeholder="请输入您的新密码"/>
-											</div>
-										</li>
-										<li class="list-group-item" style="width: 555px;">
-											<input type="submit" class="btn btn-danger btn-lg" style="width: 350px;" name="提交" />
-										</li>
-									</ul>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
+				<div role="tabpanel" class="tab-pane" id="tab7">这是..存储.</div>
 			</div>
 		</div>
-{% endblock %}
+</body>
+</html>

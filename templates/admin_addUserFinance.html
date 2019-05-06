@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %} 添加学费 {% endblock %}
+
+{% block content %}
+<div class="div_logind" style="margin-top: 70px; padding-top: 100px;">
+    <div class="container">
+        <div class="btn-group" style="width: 1140px; height: 650px; text-align: center;">
+            <form action="/admin_addUserFinance" method="post">
+                <ul class="list-group col-md-6  col-xs-6 col-md-offset-3 col-xs-offset-3">
+                    <li class="list-group-item" style="width: 555px;">
+                        <h1>添加学费界面</h1>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                            <span class="input-group-addon">学费</span>
+                            <input type="text" class="form-control input-lg" name="user_xuefei" placeholder="请输入要添加的学费"/>
+                        </div>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                            <span class="input-group-addon">书费</span>
+                            <input type="text" class="form-control input-lg" name="user_shufei" placeholder="请输入要添加的书费"/>
+                        </div>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                            <span class="input-group-addon">ID</span>
+                            <input type="text" class="form-control input-lg" name="userid" placeholder="请输入要添加的ID"/>
+                        </div>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <input type="submit" class="btn btn-danger btn-lg" style="width: 50%;" value="提交" /><a href="/admin_page" class="btn btn-primary btn-lg" style="width: 50%">返回首页</a>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
