@@ -93,7 +93,8 @@ def admin_page():
     adminname = request.cookies.get("adminname")
     user = magen.querUser()
     finance = magen.checkUserFinance2()
-    return render_template("admin_page.html",finance=finance,user=user,name=adminname)
+    teacher = magen.querTeacher()
+    return render_template("admin_page.html",finance=finance,user=user,teacher=teacher,name=adminname)
 
 # 按账号查询用户
 @app.route("/admin_checkuser",methods=["POST","GET"])
@@ -139,6 +140,23 @@ def admin_adduser():
         magen.addUser(username,password,xm,gender,qq,email,address,phone)
         return make_response(redirect('/admin_adduser_success/admin_adduser'))
 
+# 添加老师信息
+@app.route("/admin_addTeacher",methods=["POST","GET"])
+def admin_addTeacher():
+    if request.method == "GET":
+        return render_template("admin_addTeacher.html")
+    elif request.method == "POST":
+        username = request.form['username']
+        password = request.form['password']
+        xm = request.form['xm']
+        gender = request.form['gender']
+        qq = request.form['qq']
+        email = request.form['email']
+        address = request.form['address']
+        phone = request.form['phone']
+        magen.addTeacher(username,password,xm,gender,qq,email,address,phone)
+        return make_response(redirect('/admin_adduser_success/admin_addTeacher'))
+
 @app.route("/admin_adduser_success/<url>")
 def admin_adduser_success(url):
     return render_template('admin_adduser_success.html',url=url)
@@ -147,10 +165,18 @@ def admin_adduser_success(url):
 def admin_adduser_danger():
     return render_template('admin_adduser_danger.html')
 
+# 删除学生
 @app.route("/admin_deleteuser/<id>")
 def admin_deleteuser(id):
     print(id,'------------------')
     magen.deleteUser(id)
+    return make_response(redirect('/admin_page'))
+
+# 删除教师
+@app.route("/admin_deleteteacher/<id>")
+def admin_deleteteacher(id):
+    print(id,'------------------')
+    magen.deleteTeacher(id)
     return make_response(redirect('/admin_page'))
 
 # 修改用户信息
@@ -171,12 +197,38 @@ def admin_updateuser(id):
         magen.updateuser(id,username,password,xm,gender,qq,email,address,phone)
         return make_response(redirect('/admin_page'))
 
+# 修改教师信息
+@app.route("/admin_updateTeacher/<id>",methods=["GET","POST"])
+def admin_updateTeacher(id):
+    if request.method == "GET":
+        result = magen.checkTeacher1(id)
+        return render_template('admin_updateTeacher.html',result=result)
+    elif request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        xm = request.form['xm']
+        gender = request.form['gender']
+        qq = request.form['qq']
+        email = request.form['email']
+        address = request.form['address']
+        phone = request.form['phone']
+        magen.updateTeacher(id,username,password,xm,gender,qq,email,address,phone)
+        return make_response(redirect('/admin_page'))
+
+
 # 查看用户信息
 @app.route("/admin_userdetails/<id>",methods=["GET","POST"])
 def admin_userdetails(id):
     result = magen.checkUser1(id)
     return render_template('admin_userdetails.html', result=result)
 
+# 查看教师信息
+@app.route("/admin_Teacherdetails/<id>",methods=["GET","POST"])
+def admin_Teacherdetails(id):
+    result = magen.checkUser1(id)
+    return render_template('admin_Teacherdetails.html', result=result)
+
+# 添加学生财务信息
 @app.route("/admin_addUserFinance",methods=["GET","POST"])
 def admin_addUserFinance():
     if request.method == "GET":

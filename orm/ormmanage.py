@@ -19,9 +19,23 @@ def checkAdmin(username,password):
     finally:
         session.close()
 
+# 查询所有学生
 def querUser():
     try:
         result = session.query(model.User).all()
+        if result:
+            return result
+        else:
+            return None
+    except Exception as e:
+        print(e)
+    finally:
+        session.close()
+
+# 查询所有教师
+def querTeacher():
+    try:
+        result = session.query(model.Teacher).all()
         if result:
             return result
         else:
@@ -44,9 +58,23 @@ def checkUser(username,password):
     finally:
         session.close()
 
+# 根据id查询学生
 def checkUser1(id):
     try:
         result= session.query(model.User).filter(model.User.id == id).first()
+        if result:
+            return result
+        else:
+            return None
+    except Exception as e:
+        print(e)
+    finally:
+        session.close()
+
+# 根据id查询教师
+def checkTeacher1(id):
+    try:
+        result= session.query(model.Teacher).filter(model.Teacher.id == id).first()
         if result:
             return result
         else:
@@ -138,7 +166,17 @@ def addUser(username,password,xm,gender,qq,email,address,phone):
     finally:
         session.close()
 
-# 添加财务信息
+# 添加教师
+def addTeacher(username,password,xm,gender,qq,email,address,phone):
+    try:
+        session.add(model.Teacher(username=username,password=password,xm=xm,gender=gender,qq=qq,email=email,address=address,phone=phone))
+        session.commit()
+    except Exception as e:
+        print(e)
+    finally:
+        session.close()
+
+# 添加学生财务信息
 def addUserFinance(user_xuefei,user_shufei,user_zhusufei,user_sum,user_zhifu,user_qian,userid):
     try:
         xm = checkUser1(userid).xm
@@ -147,11 +185,20 @@ def addUserFinance(user_xuefei,user_shufei,user_zhusufei,user_sum,user_zhifu,use
         print(e)
 
 
-# 删除用户
+# 删除学生
 def deleteUser(userid):
     try:
         session.query(model.User).filter(model.User.id == userid).delete()
         session.commit()
+    except Exception as e:
+        print(e)
+    finally:
+        session.close()
+
+# 删除教师
+def deleteTeacher(userid):
+    try:
+        session.query(model.Teacher).filter(model.Teacher.id == userid).delete()
         session.commit()
     except Exception as e:
         print(e)
@@ -165,12 +212,24 @@ def deleteUserFinance(_id):
     except Exception as e:
         print(e)
 
-# 修改用户信息
+# 修改学生信息
 def updateuser(id,username,password,xm,gender,qq,email,address,phone):
     try:
         result = session.query(model.User).filter(model.User.id == id).update(model.fjson(username=username,password=password,xm=xm,gender=gender,qq=qq,email=email,address=address,phone=phone).f2)
         session.commit()
         model.collection.update_many(model.fjson(userid=id).f1, {'$set': model.fjson(xm=xm).f8})
+        return result
+    except Exception as e:
+        print(e)
+    finally:
+        session.close()
+
+
+# 修改教师信息
+def updateTeacher(id,username,password,xm,gender,qq,email,address,phone):
+    try:
+        result = session.query(model.Teacher).filter(model.Teacher.id == id).update(model.fjson(username=username,password=password,xm=xm,gender=gender,qq=qq,email=email,address=address,phone=phone).f2)
+        session.commit()
         return result
     except Exception as e:
         print(e)

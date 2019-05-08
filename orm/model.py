@@ -27,17 +27,17 @@ class User(Base):
     address = Column(String(100),nullable=True)
     phone = Column(String(30),nullable=True)
 
-
-
-class UserFinance(Base):
-    __tablename__ = "userfinance"
+class Teacher(Base):
+    __tablename__ = "teacher"
     id = Column(Integer,primary_key=True,autoincrement=True,nullable=False)
-    user_xuefei = Column(String(20),nullable=False)
-    user_shufei = Column(String(20),nullable=False)
-    # user_yijiao = Column(String(20), nullable=False)
-    # user_weijiao = Column(String(20), nullable=False)
-    # user_shenyu = Column(String(20), nullable=False)
-    userid = Column(Integer,ForeignKey("user.id"),nullable=False)
+    username = Column(String(20),nullable=False)
+    password = Column(String(20),nullable=False)
+    xm = Column(String(20),nullable=True)
+    gender = Column(Integer,nullable=False)
+    qq = Column(String(20),nullable=True)
+    email = Column(String(20),nullable=True)
+    address = Column(String(100),nullable=True)
+    phone = Column(String(30),nullable=True)
 
 class UserDetention(Base):
     __tablename__ = "userdetention"

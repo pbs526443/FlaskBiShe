@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %} 添加用户 {% endblock %}
+{% block grzx %}
+<div class="col-md-3 col-xs-3">
+</div>
+<div class="col-md-3 col-xs-3">
+</div>
+{% endblock %}
+{% block content %}
+<div class="div_logind" style="margin-top: 70px; padding-top: 100px;">
+    <div class="container">
+        <div class="btn-group" style="width: 1140px; height: 650px; text-align: center;">
+            <form action="/admin_addTeacher" method="post">
+                <ul class="list-group col-md-6  col-xs-6 col-md-offset-3 col-xs-offset-3">
+                    <li class="list-group-item" style="width: 555px;">
+                        <h1>欢迎添加用户</h1>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                            <span class="input-group-addon">账号</span>
+                            <input type="text" class="form-control input-lg" name="username" placeholder="请输入添加的账号"/>
+                        </div>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <div class="input-group col-md-8 col-md-offset-2  col-xs-8 col-xs-offset-2">
+                            <span class="input-group-addon">密码</span>
+                            <input type="password" class="form-control input-lg" name="password" placeholder="请输入添加的初始密码"/>
+                        </div>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                            <span class="input-group-addon">姓名</span>
+                            <input type="text" class="form-control input-lg" name="xm" placeholder="请输入添加的姓名"/>
+                        </div>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                            <label class="radio-inline">
+                                <input type="radio" name="gender"  value="1" checked> 男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" value="0"> 女
+                            </label>
+                        </div>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                            <span class="input-group-addon">Q Q</span>
+                            <input type="text" class="form-control input-lg" name="qq" placeholder="请输入添加的QQ"/>
+                        </div>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                            <span class="input-group-addon">邮箱</span>
+                            <input type="email" class="form-control input-lg" name="email" placeholder="请输入添加的邮箱"/>
+                        </div>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                            <span class="input-group-addon">地址</span>
+                            <input type="text" class="form-control input-lg" name="address" placeholder="请输入添加的地址"/>
+                        </div>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                            <span class="input-group-addon">电话</span>
+                            <input type="text" class="form-control input-lg" name="phone" placeholder="请输入添加的电话"/>
+                        </div>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <input type="submit" class="btn btn-danger btn-lg" style="width: 50%;" value="提交" /><a href="/admin_page" class="btn btn-primary btn-lg" style="width: 50%">返回首页</a>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
