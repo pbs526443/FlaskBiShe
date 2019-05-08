@@ -27,7 +27,7 @@
 			<div class="container" style="width: 1170px;height: 69px;">
 				<div class="row">
 					<div class="col-md-4 col-xs-4">
-						<h1 style="text-align: left; color: #b4b5ba;">星空学院欢迎你</h1>
+						<h1 style="text-align: left; color: #b4b5ba;">统一信息门户</h1>
 					</div>
 					<div class="col-md-8 col-xs-8">
 						<ul class="login_ul">
@@ -36,7 +36,7 @@
 							{% endblock %}
 							<div class="col-md-3 col-xs-3">
 								<li>
-									<h3><a href="/">退出登录</a></h3>
+									<a href="/" class="btn btn-danger"><h3>退出登录</h3></a>
 								</li>
 							</div>
 						</ul>
@@ -44,7 +44,7 @@
 				</div>
 			</div>
 		</nav>
-	    {% block  content %}
-        {% endblock %}
+		{% block  content %}
+		{% endblock %}
 	</body>
 </html>

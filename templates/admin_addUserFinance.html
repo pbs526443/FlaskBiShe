@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block title %} 添加学费 {% endblock %}
-
+{% block grzx %}
+<div class="col-md-3 col-xs-3">
+</div>
+<div class="col-md-3 col-xs-3">
+</div>
+{% endblock %}
 {% block content %}
 <div class="div_logind" style="margin-top: 70px; padding-top: 100px;">
     <div class="container">
@@ -12,19 +17,31 @@
                     </li>
                     <li class="list-group-item" style="width: 555px;">
                         <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
-                            <span class="input-group-addon">学费</span>
+                            <span class="input-group-addon">学 &nbsp; 费</span>
                             <input type="text" class="form-control input-lg" name="user_xuefei" placeholder="请输入要添加的学费"/>
                         </div>
                     </li>
                     <li class="list-group-item" style="width: 555px;">
                         <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
-                            <span class="input-group-addon">书费</span>
+                            <span class="input-group-addon">书 &nbsp; 费</span>
                             <input type="text" class="form-control input-lg" name="user_shufei" placeholder="请输入要添加的书费"/>
                         </div>
                     </li>
                     <li class="list-group-item" style="width: 555px;">
                         <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
-                            <span class="input-group-addon">ID</span>
+                            <span class="input-group-addon">住宿费</span>
+                            <input type="text" class="form-control input-lg" name="user_zhusufei" placeholder="请输入要添加的住宿费"/>
+                        </div>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                            <span class="input-group-addon">已支付</span>
+                            <input type="text" class="form-control input-lg" name="user_zhifu" placeholder="请输入已支付金额"/>
+                        </div>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                            <span class="input-group-addon">&nbsp;&nbsp;I &nbsp;&nbsp; D&nbsp;</span>
                             <input type="text" class="form-control input-lg" name="userid" placeholder="请输入要添加的ID"/>
                         </div>
                     </li>

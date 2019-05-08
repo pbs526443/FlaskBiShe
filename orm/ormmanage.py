@@ -3,6 +3,7 @@ from sqlalchemy import create_engine
 engine = create_engine("mysql+mysqlconnector://root:123456@localhost/bishedb",
                                     encoding='utf8', echo=True)
 import pymongo,json
+import re
 from sqlalchemy.orm import sessionmaker
 session = sessionmaker()()
 
@@ -55,9 +56,10 @@ def checkUser1(id):
     finally:
         session.close()
 
-def checkUserFinance(userid):
+def checkUser2(username):
     try:
-        result = session.query(model.UserFinance).filter(model.UserFinance.userid == userid).all()
+        username = '%' + username + '%'
+        result= session.query(model.User).filter(model.User.username.like(username)).all()
         if result:
             return result
         else:
@@ -67,11 +69,10 @@ def checkUserFinance(userid):
     finally:
         session.close()
 
+
 # 查询个人财务信息
 def checkUserFinance1(userid):
     try:
-        # print(model.fjson().f1(userid=userid),"_____________________")
-        # f1 = {'userid':userid}
         result = model.collection.find(model.fjson(userid).f1)
         if result:
             return result
@@ -79,6 +80,18 @@ def checkUserFinance1(userid):
             return None
     except Exception as e:
         print(e)
+
+# 根据xm查找信息
+def checkUserFinance_xm(xm):
+    try:
+        result = model.collection.find({'xm':re.compile(xm)})
+        if result:
+            return result
+        else:
+            return None
+    except Exception as e:
+        print(e)
+
 
 # 查询所有财务信息
 def checkUserFinance2():
@@ -115,6 +128,7 @@ def checkUserDetention(userid):
     finally:
         session.close()
 
+# 添加用户
 def addUser(username,password,xm,gender,qq,email,address,phone):
     try:
         session.add(model.User(username=username,password=password,xm=xm,gender=gender,qq=qq,email=email,address=address,phone=phone))
@@ -125,11 +139,13 @@ def addUser(username,password,xm,gender,qq,email,address,phone):
         session.close()
 
 # 添加财务信息
-def addUserFinance(user_xuefei,user_shufei,userid):
+def addUserFinance(user_xuefei,user_shufei,user_zhusufei,user_sum,user_zhifu,user_qian,userid):
     try:
-        model.collection.insert(model.fjson(user_xuefei=user_xuefei,user_shufei=user_shufei,userid=userid).f3)
+        xm = checkUser1(userid).xm
+        model.collection.insert(model.fjson(user_xuefei=user_xuefei,user_shufei=user_shufei,user_zhusufei=user_zhusufei,user_sum=user_sum,user_zhifu=user_zhifu,user_qian=user_qian,userid=userid,xm=xm).f3)
     except Exception as e:
         print(e)
+
 
 # 删除用户
 def deleteUser(userid):
@@ -154,6 +170,7 @@ def updateuser(id,username,password,xm,gender,qq,email,address,phone):
     try:
         result = session.query(model.User).filter(model.User.id == id).update(model.fjson(username=username,password=password,xm=xm,gender=gender,qq=qq,email=email,address=address,phone=phone).f2)
         session.commit()
+        model.collection.update_many(model.fjson(userid=id).f1, {'$set': model.fjson(xm=xm).f8})
         return result
     except Exception as e:
         print(e)
@@ -165,6 +182,7 @@ def updateuser1(id,xm,gender,qq,email,address,phone):
     try:
         result = session.query(model.User).filter(model.User.id == id).update(model.fjson(xm=xm,gender=gender,qq=qq,email=email,address=address,phone=phone).f7)
         session.commit()
+        model.collection.update_many(model.fjson(userid=id).f1,{'$set':model.fjson(xm=xm).f8})
         return result
     except Exception as e:
         print(e)
@@ -196,8 +214,9 @@ def updateUserpassword(id,password):
         session.close()
 
 # 修改财务信息
-def updateUserFinance(_id,user_xuefei,user_shufei,userid):
+def updateUserFinance(_id,user_xuefei,user_shufei,user_zhusufei,user_sum,user_zhifu,user_qian,userid):
     try:
-        model.collection.update_one(model.fjson(_id=_id).f4,{'$set':model.fjson(_id=_id,user_xuefei=user_xuefei,user_shufei=user_shufei,userid=userid).f5})
+        model.collection.update_one(model.fjson(_id=_id).f4,
+                                    {'$set':model.fjson(user_xuefei=user_xuefei,user_shufei=user_shufei,user_zhusufei=user_zhusufei,user_sum=user_sum,user_zhifu=user_zhifu,user_qian=user_qian,userid=userid).f5})
     except Exception as e:
         print(e)

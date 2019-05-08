@@ -53,15 +53,19 @@ db = con["bishe"]
 collection = db["UserFinance"]
 
 class fjson:
-    def __init__(self,userid=0,username=0,password=0,xm=None,gender=None,qq=None,email=None,address=None,phone=None,_id=None,user_xuefei=0,user_shufei=0):
-        self.f1 = {"userid":userid}
+    def __init__(self,userid=0,username=0,password=0,xm=None,gender=None,qq=None,email=None,address=None,phone=None,
+                 _id=None,user_xuefei=0,user_shufei=0,user_zhusufei=0,user_sum=0,user_zhifu=0,user_qian=0):
+        self.f1 = {"userid":int(userid)}
         self.f2 = {"username":username,"password":password,"xm":xm,"gender":gender,"qq":qq,"email":email,
                    "address":address,"phone":phone}
-        self.f3 = {"user_xuefei":user_xuefei,"user_shufei":user_shufei,"userid":int(userid)}
+        self.f3 = {"user_xuefei":user_xuefei,"user_shufei":user_shufei,"user_zhusufei":user_zhusufei,
+                   "user_sum":user_sum,"user_zhifu":user_zhifu,"user_qian":user_qian,"userid":int(userid),"xm":xm}
         self.f4 = {"_id": ObjectId(_id)}
-        self.f5 = {"_id": ObjectId(_id), "user_xuefei": user_xuefei, "user_shufei": user_shufei, "userid": int(userid)}
+        self.f5 = {"user_xuefei": user_xuefei,"user_shufei": user_shufei,"user_zhusufei":user_zhusufei,
+                   "user_sum":user_sum,"user_zhifu":user_zhifu,"user_qian":user_qian,"userid": int(userid)}
         self.f6 = {"password":password}
-        self.f7 = {"xm": xm, "gender": gender, "qq": qq, "email": email,"address": address, "phone": phone}
+        self.f7 = {"xm": xm, "gender": gender,"qq": qq,"email": email,"address": address,"phone": phone}
+        self.f8 = {"xm":xm}
 
 
 if __name__ == '__main__':

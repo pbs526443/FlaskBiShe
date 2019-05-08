@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 {% block title %} 修改页面 {% endblock %}
+{% block grzx %}
+<div class="col-md-3 col-xs-3">
+</div>
+<div class="col-md-3 col-xs-3">
+</div>
+{% endblock %}
 {% block content %}
 <div class="div_logind" style="margin-top: 70px; padding-top: 100px;">
     <div class="container">
@@ -7,7 +13,7 @@
             <form action="/admin_updateUserFinance/{{result._id}}" method="post">
                 <ul class="list-group col-md-6  col-xs-6 col-md-offset-3 col-xs-offset-3">
                     <li class="list-group-item" style="width: 555px;">
-                        <h1>修改用户</h1>
+                        <h1>修改用户财务</h1>
                     </li>
                     <li class="list-group-item" style="width: 555px;">
                         <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
@@ -19,6 +25,18 @@
                         <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
                             <span class="input-group-addon">书费</span>
                             <input type="text" class="form-control input-lg" name="user_shufei" value="{{result.user_shufei}}"/>
+                        </div>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                            <span class="input-group-addon">住宿费</span>
+                            <input type="text" class="form-control input-lg" name="user_zhusufei" value="{{result.user_zhusufei}}"/>
+                        </div>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                            <span class="input-group-addon">已支付</span>
+                            <input type="text" class="form-control input-lg" name="user_zhifu" value="{{result.user_zhifu}}"/>
                         </div>
                     </li>
                     <li class="list-group-item" style="width: 555px;">

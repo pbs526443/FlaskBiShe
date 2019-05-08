@@ -18,26 +18,9 @@ def home_page():
     username = request.cookies.get("username")
     userid = request.cookies.get("userid")
     userid = int(userid)
-    result = magen.checkUserFinance(userid)
     result1 = magen.checkUserDetention(userid)
     result2 = magen.checkUserFinance1(userid)
     print(result2,type(result2))
-    # print(result1,type(result1))
-    # for res in result1:
-    #     print(res, type(res), "_________")
-    #     d1 = {"userid":userid}
-    #     print(d1,type(d1))
-    #     print(res.id)
-    #     d2 = res.__dict__
-    #     print(d2,type(d2),json_util.dumps(d2))
-
-    # for res in result2:
-    #     print("====================================",res,res["userid"],type(res))
-    #     d1 = json_util.dumps(res)
-    #     print(type(d1),d1,'--------')
-    #     d2 = json_util.loads(d1)
-    #     print(type(d2),d2,"%%%%%%%%%%%%%%%%%%")
-    # print(result[0].id,'##########')
     return render_template("home_page.html",finance=result2,liuxiao = result1,name=username)
 
 # 用户修改密码
@@ -110,8 +93,36 @@ def admin_page():
     adminname = request.cookies.get("adminname")
     user = magen.querUser()
     finance = magen.checkUserFinance2()
-    return render_template("admin_page.html",user=user,finance=finance,name=adminname)
+    return render_template("admin_page.html",finance=finance,user=user,name=adminname)
 
+# 按账号查询用户
+@app.route("/admin_checkuser",methods=["POST","GET"])
+def admin_checkuser():
+    if request.method == "POST":
+        username = request.form["username"]
+        return make_response(redirect('/admin_checkuser1/'+username))
+
+@app.route("/admin_checkuser1/<username>")
+def admin_checkuser1(username):
+    adminname = request.cookies.get("adminname")
+    user = magen.checkUser2(username)
+    return render_template("admin_checkuser.html", user=user, name=adminname)
+
+# 按账号查询用户
+@app.route("/admin_checkuserfinance",methods=["POST","GET"])
+def admin_checkuserfinance():
+    if request.method == "POST":
+        xm = request.form["xm"]
+        return make_response(redirect('/admin_checkuserfinance1/' + xm))
+
+@app.route("/admin_checkuserfinance1/<xm>")
+def admin_checkuserfinance1(xm):
+    adminname = request.cookies.get("adminname")
+    finance = magen.checkUserFinance_xm(xm)
+    return render_template("admin_checkuserfinance.html", finance=finance, name=adminname)
+
+
+# 添加用户信息
 @app.route("/admin_adduser",methods=["POST","GET"])
 def admin_adduser():
     if request.method == "GET":
@@ -173,9 +184,13 @@ def admin_addUserFinance():
     elif request.method == "POST":
         user_xuefei = request.form["user_xuefei"]
         user_shufei = request.form["user_shufei"]
+        user_zhusufei = request.form["user_zhusufei"]
+        user_zhifu = request.form["user_zhifu"]
+        user_sum = int(user_xuefei)+int(user_shufei)+int(user_zhusufei)
+        user_qian = user_sum - int(user_zhifu)
         userid = request.form["userid"]
         # print(user_xuefei,user_shufei,userid,"&&&&&&&&&&&&&&&&&&&&&&&&&&&")
-        result = magen.addUserFinance(user_xuefei,user_shufei,userid)
+        result = magen.addUserFinance(user_xuefei,user_shufei,user_zhusufei,user_sum,user_zhifu,user_qian,userid)
         # print(result)
         return make_response(redirect('/admin_adduser_success/admin_addUserFinance'))
 
@@ -188,8 +203,12 @@ def admin_updateUserFinance(id):
     elif request.method == "POST":
         user_xuefei = request.form["user_xuefei"]
         user_shufei = request.form["user_shufei"]
+        user_zhusufei = request.form["user_zhusufei"]
+        user_zhifu = request.form["user_zhifu"]
         userid = request.form["userid"]
-        magen.updateUserFinance(id,user_xuefei,user_shufei,userid)
+        user_sum = int(user_xuefei) + int(user_shufei) + int(user_zhusufei)
+        user_qian = user_sum - int(user_zhifu)
+        magen.updateUserFinance(id,user_xuefei,user_shufei,user_zhusufei,user_sum,user_zhifu,user_qian,userid)
         return make_response(redirect('/admin_page'))
 
 @app.route("/admin_deleteUserFinance/<id>")

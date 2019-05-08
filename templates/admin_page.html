@@ -3,13 +3,13 @@
 {% block grzx %}
 <div class="col-md-3 col-xs-3 col-md-offset-3 col-xs-offset-3">
 	<li>
-		<h3><a href="#">欢迎你-{{name}}</a></h3>
+		<a href="#" class="btn btn-default"><h3>欢迎你-{{name}}</h3></a>
 	</li>
 </div>
 {% endblock %}
 {% block content %}
-	<div class="container LTAB">
-			<div class="col-md-2 col-xs-2 text-center">
+<div class="container LTAB">
+	<div class="col-md-2 col-xs-2 text-center">
 				<ul class="nav nav-pills nav-stacked " role="tablist" id="vtab">
 					<li role="presentation" class="active">
 						<a href="#tab1" aria-controls="home" role="tab" data-toggle="tab">
@@ -17,7 +17,7 @@
 						</a>
 					</li>
 					<li role="presentation">
-						<a href="#tab2" aria-controls="inbox" role="tab" data-toggle="tab">
+						<a href="#tab2" aria-controls="home" role="tab" data-toggle="tab">
 							<h3>财务管理</h3>
 						</a>
 					</li>
@@ -38,19 +38,26 @@
 					</li>
 					<li role="presentation">
 						<a href="#tab6" aria-controls="outbox1" role="tab" data-toggle="tab">
-							<h3>事件</h3>
-						</a>
-					</li>
-					<li role="presentation">
-						<a href="#tab7" aria-controls="outbox1" role="tab" data-toggle="tab">
 							<h3>修改密码</h3>
 						</a>
 					</li>
 				</ul>
 			</div>
-			<div class="tab-content vertical-tab-content col-md-10 col-xs-10">
+	<div class="tab-content vertical-tab-content col-md-10 col-xs-10">
 				<div role="tabpanel" class="tab-pane active" id="tab1">
-                    <table class="table table-bordered table-hover table-striped">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<form action="/admin_checkuser" method="post">
+								<div class="input-group col-md-6 col-md-offset-6 col-xs-6 col-xs-offset-6">
+									<input type="text" class="form-control input-lg" name="username" placeholder="请输入账号"/>
+									<span class="input-group-btn">
+										<input type="submit" class="btn btn-danger btn-lg" name="提交" />
+									</span>
+								</div>
+							</form>
+						</div>
+						<div class="panel-body">
+							<table class="table table-bordered table-hover table-striped">
 						<tr>
 							<th> <h4>编号</h4></th>
 							<th><h4>账号</h4></th>
@@ -78,24 +85,49 @@
 							</tr>
 						{% endif %}
 					</table>
-                    <a href="/admin_adduser" class="btn btn-primary admin-a1"><h4>增加</h4> </a>
+							<a href="/admin_adduser" class="btn btn-primary admin-a1"><h4>增加</h4> </a>
+						</div>
+					</div>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="tab2">
-					<table class="table table-bordered table-hover table-striped">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<form action="/admin_checkuserfinance" method="post">
+								<div class="input-group col-md-6 col-md-offset-6 col-xs-6 col-xs-offset-6">
+									<input type="text" class="form-control input-lg" name="xm" placeholder="请输入姓名"/>
+									<span class="input-group-btn">
+										<input type="submit" class="btn btn-danger btn-lg" name="提交" />
+									</span>
+								</div>
+							</form>
+						</div>
+						<div class="panel-body">
+							<table class="table table-bordered table-hover table-striped">
 						<tr>
 							<th> <h4>编号</h4></th>
+							<th> <h4>姓名</h4></th>
 							<th><h4>学费</h4></th>
 							<th><h4>书费</h4></th>
+							<th><h4>住宿费</h4></th>
+							<th><h4>总金额</h4></th>
+							<th><h4>已支付</h4></th>
+							<th><h4>欠费金额</h4></th>
                             <th><h4></h4></th>
 						</tr>
                             {% if finance %}
                                 {% for result in finance %}
                                     <tr>
+
                                         <th><h4>{{loop.index}}</h4></th>
+										<th><h4>{{result.xm}}</h4></th>
                                         <th><h4>{{result.user_xuefei}}</h4></th>
                                         <th><h4>{{result.user_shufei}}</h4></th>
-                                        <th><a href="/admin_updateUserFinance/{{result._id}}" class="btn btn-info" style="width: 49%">修改</a>
-                                        <a href="/admin_deleteUserFinance/{{result._id}}" class="btn btn-danger" style="width: 49%">删除</a></th>
+										<th><h4>{{result.user_zhusufei}}</h4></th>
+                                        <th><h4>{{result.user_sum}}</h4></th>
+										<th><h4>{{result.user_zhifu}}</h4></th>
+                                        <th><h4>{{result.user_qian}}</h4></th>
+                                        <th><a href="/admin_updateUserFinance/{{result._id}}" class="btn btn-info" style="width: 48%">修改</a>
+                                        <a href="/admin_deleteUserFinance/{{result._id}}" class="btn btn-danger" style="width: 48%">删除</a></th>
                                     </tr>
                                 {% endfor %}
                             {% else %}
@@ -106,7 +138,9 @@
 							</tr>
 						{% endif %}
 					</table>
-                    <a href="/admin_addUserFinance" class="btn btn-primary admin-a1"><h4>增加</h4> </a>
+                    		<a href="/admin_addUserFinance" class="btn btn-primary admin-a1"><h4>增加</h4> </a>
+						</div>
+					</div>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="tab3">
 					<table class="table table-bordered table-hover table-striped">
@@ -132,13 +166,12 @@
 				</div>
 				<div role="tabpanel" class="tab-pane" id="tab4">这是.视音频..</div>
 				<div role="tabpanel" class="tab-pane" id="tab5">这是..图像.</div>
-				<div role="tabpanel" class="tab-pane" id="tab6">这是..事件.</div>
-				<div role="tabpanel" class="tab-pane" id="tab7">
+				<div role="tabpanel" class="tab-pane" id="tab6">
 					<div class="div_logind" style="margin-top: 40px;">
 						<div class="container">
 							<div class="btn-group" style="text-align: center;">
 								<form action="/admin_updatepassword" method="post">
-									<ul class="list-group col-md-8 col-xs-8">
+									<ul class="list-group col-md-8 col-xs-8 col-md-offset-1 col-xs-offset-1">
 										<li class="list-group-item" style="width: 555px;">
 											<h1>修改密码界面</h1>
 										</li>
@@ -164,5 +197,5 @@
 					</div>
 				</div>
 			</div>
-		</div>
+</div>
 {% endblock %}
