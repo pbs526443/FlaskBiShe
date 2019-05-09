@@ -14,14 +14,15 @@ app.debug = True
 # 用户首页界面
 @app.route('/home_page')
 def home_page():
-    user = None
     username = request.cookies.get("username")
     userid = request.cookies.get("userid")
     userid = int(userid)
     result1 = magen.checkUserDetention(userid)
     result2 = magen.checkUserFinance1(userid)
     print(result2,type(result2))
-    return render_template("home_page.html",finance=result2,liuxiao = result1,name=username)
+    content = magen.checkContent2()
+    content1 = magen.checkContent3()
+    return render_template("home_page.html",finance=result2,liuxiao = result1,name=username,content=content,content1=content1)
 
 # 用户修改密码
 @app.route("/user_updatepassword",methods=["GET","POST"])
@@ -58,6 +59,81 @@ def user_personal():
 def user_personal_success():
     return render_template("user_personal_success.html")
 
+# 教师主页面
+@app.route("/teacher_page")
+def teacher_page():
+    teachername = request.cookies.get("teachername")
+    teacherid = request.cookies.get("teacherid")
+    teacherid = int(teacherid)
+    result = magen.checkTeacherFinance1(teacherid)
+    content = magen.checkContent2()
+    content1 = magen.checkContent3()
+    teachercontent = magen.checkContent4(teacherid)
+    return render_template('teacher_page.html',name=teachername,finance=result,content=content,content1=content1,teachercontent=teachercontent)
+
+# 教师修改密码
+@app.route("/teacher_updatepassword",methods=["GET","POST"])
+def teacher_updatepassword():
+    if request.method == "POST":
+        id = request.cookies.get("teacherid")
+        password = request.form["password"]
+        password1 = request.form["password1"]
+        if password1 == password:
+            return make_response(redirect('/teacher_page'))
+        else:
+            magen.updateTeacherpassword(id,password1)
+            return make_response(redirect('/'))
+
+# 教师修改成功
+@app.route("/teacher_personal_success")
+def teacher_personal_success():
+    return render_template("teacher_personal_success.html")
+
+# 教师个人中心
+@app.route("/teacher_personal",methods=["GET","POST"])
+def teacher_personal():
+    id = request.cookies.get("teacherid")
+    if request.method == "GET":
+        result = magen.checkTeacher1(id)
+        return render_template("teacher_personal.html",result=result)
+    elif request.method == "POST":
+        xm = request.form["xm"]
+        gender = request.form['gender']
+        qq = request.form['qq']
+        email = request.form['email']
+        address = request.form['address']
+        phone = request.form['phone']
+        magen.updateTeacher1(id,xm,gender,qq,email,address,phone)
+        return make_response(redirect('/teacher_personal_success'))
+
+# 教师发布公告
+@app.route("/teacher_addContent",methods=["POST","GET"])
+def teacher_addContent():
+    id = request.cookies.get("teacherid")
+    if request.method == "POST":
+        content = request.form['content']
+        magen.addContent(content,id)
+        return make_response(redirect('/teacher_page'))
+
+# 教师修改公告
+@app.route("/teacher_updateContent/<id>",methods=["POST","GET"])
+def teacher_updateContent(id):
+    if request.method == "GET":
+        result = magen.checkContent1(id)
+        return render_template("teacher_updateContent.html",result=result)
+    elif request.method == "POST":
+        tid = request.cookies.get("teacherid")
+        content = request.form['content']
+        magen.updateContent(id,content,tid)
+        return make_response(redirect('/teacher_page'))
+
+# 教师删除公告信息
+@app.route("/teacher_deleteContent/<id>")
+def teacher_deleteContent(id):
+    magen.deleteContent(id)
+    return make_response(redirect('/teacher_page'))
+
+
 # 登录界面
 @app.route("/",methods=["POST","GET"])
 def login():
@@ -69,11 +145,24 @@ def login():
         radio = request.form["radio"]
         if radio == '1':
             result = magen.checkUser(username,password)
+            print(result,username,password,"+++++++++++++++++")
             if result != None:
                 uid = str(result.id)
                 res = make_response(redirect('/home_page'))
                 res.set_cookie('username',result.username,expires=datetime.datetime.now()+datetime.timedelta(days=7))
                 res.set_cookie('userid',uid,expires=datetime.datetime.now()+datetime.timedelta(days=7))
+                return res
+            else:
+                return redirect("/")
+        elif radio == '2':
+            result = magen.checkTeacher(username, password)
+            print(result, username, password, "+++++++++++++++++")
+            if result != None:
+                uid = str(result.id)
+                res = make_response(redirect('/teacher_page'))
+                res.set_cookie('teachername', result.username,
+                               expires=datetime.datetime.now() + datetime.timedelta(days=7))
+                res.set_cookie('teacherid', uid, expires=datetime.datetime.now() + datetime.timedelta(days=7))
                 return res
             else:
                 return redirect("/")
@@ -88,13 +177,16 @@ def login():
             else:
                 return redirect("/")
 
+# admin主页面
 @app.route("/admin_page")
 def admin_page():
     adminname = request.cookies.get("adminname")
     user = magen.querUser()
     finance = magen.checkUserFinance2()
     teacher = magen.querTeacher()
-    return render_template("admin_page.html",finance=finance,user=user,teacher=teacher,name=adminname)
+    content = magen.checkContent()
+    TeacherFinance = magen.checkTeacherFinance()
+    return render_template("admin_page.html",finance=finance,TeacherFinance=TeacherFinance,user=user,teacher=teacher,content=content,name=adminname)
 
 # 按账号查询用户
 @app.route("/admin_checkuser",methods=["POST","GET"])
@@ -103,13 +195,14 @@ def admin_checkuser():
         username = request.form["username"]
         return make_response(redirect('/admin_checkuser1/'+username))
 
+# 按照账号查询学生
 @app.route("/admin_checkuser1/<username>")
 def admin_checkuser1(username):
     adminname = request.cookies.get("adminname")
     user = magen.checkUser2(username)
     return render_template("admin_checkuser.html", user=user, name=adminname)
 
-# 按账号查询用户
+# 按姓名查询学生财务
 @app.route("/admin_checkuserfinance",methods=["POST","GET"])
 def admin_checkuserfinance():
     if request.method == "POST":
@@ -121,7 +214,6 @@ def admin_checkuserfinance1(xm):
     adminname = request.cookies.get("adminname")
     finance = magen.checkUserFinance_xm(xm)
     return render_template("admin_checkuserfinance.html", finance=finance, name=adminname)
-
 
 # 添加用户信息
 @app.route("/admin_adduser",methods=["POST","GET"])
@@ -156,6 +248,42 @@ def admin_addTeacher():
         phone = request.form['phone']
         magen.addTeacher(username,password,xm,gender,qq,email,address,phone)
         return make_response(redirect('/admin_adduser_success/admin_addTeacher'))
+
+# 添加公告
+@app.route("/admin_addContent",methods=["POST","GET"])
+def admin_addContent():
+    if request.method == "GET":
+        return render_template("admin_addContent.html")
+    elif request.method == "POST":
+        content = request.form['content']
+        tid = request.form['tid']
+        magen.addContent(content,tid)
+        return make_response(redirect('/admin_adduser_success/admin_addContent'))
+
+# 添加教师工资
+@app.route("/admin_addTeacherFinance",methods=["POST","GET"])
+def admin_addTeacherFinance():
+    if request.method == "GET":
+        return render_template("admin_addTeacherFinance.html")
+    elif request.method == "POST":
+        t_wages = request.form['t_wages']
+        t_subsidy = request.form['t_subsidy']
+        t_allowance = request.form['t_allowance']
+        userid = request.form['userid']
+        t_data = request.form['t_data']
+        a1 = int(t_wages) + int(t_subsidy) + int(t_allowance)
+        sum = int(t_wages) + int(t_subsidy) + int(t_allowance) -3500
+        if sum <= 1500:
+            t_tax = sum * 0.03
+        elif 1500 < sum <= 4500:
+            t_tax = sum * 0.1
+        elif 4500 < sum <= 9000:
+            t_tax = sum * 0.2
+        else:
+            t_tax = sum * 0.3
+        t_sum = a1 - t_tax
+        magen.addTeacherFinance(t_wages,t_subsidy,t_allowance,t_tax,t_sum,t_data,userid)
+        return make_response(redirect('/admin_adduser_success/admin_addTeacherFinance'))
 
 @app.route("/admin_adduser_success/<url>")
 def admin_adduser_success(url):
@@ -215,6 +343,43 @@ def admin_updateTeacher(id):
         magen.updateTeacher(id,username,password,xm,gender,qq,email,address,phone)
         return make_response(redirect('/admin_page'))
 
+# 修改公告
+@app.route("/admin_updateContent/<id>",methods=["POST","GET"])
+def admin_updateContent(id):
+    if request.method == "GET":
+        result = magen.checkContent1(id)
+        return render_template("admin_updateContent.html",result=result)
+    elif request.method == "POST":
+        content = request.form['content']
+        tid = request.form['tid']
+        magen.updateContent(id,content,tid)
+        return make_response(redirect('/admin_page'))
+
+# 修改教师工资
+@app.route("/admin_updateTeacherFinance/<id>",methods=["POST","GET"])
+def admin_updateTeacherFinance(id):
+    if request.method == "GET":
+        result = magen.checkTeacherFinance1(id)
+        return render_template("admin_updateTeacherFinance.html",result=result)
+    elif request.method == "POST":
+        t_wages = request.form['t_wages']
+        t_subsidy = request.form['t_subsidy']
+        t_allowance = request.form['t_allowance']
+        userid = request.form['userid']
+        t_data = request.form['t_data']
+        a1 = int(t_wages) + int(t_subsidy) + int(t_allowance)
+        sum = a1 - 3500
+        if sum <= 1500:
+            t_tax = sum * 0.03
+        elif 1500 < sum <= 4500:
+            t_tax = sum * 0.1
+        elif 4500 < sum <= 9000:
+            t_tax = sum * 0.2
+        else:
+            t_tax = sum * 0.3
+        t_sum = a1 - t_tax
+        magen.updateTeacherFinance(id,t_wages, t_subsidy, t_allowance, t_tax, t_sum, t_data, userid)
+        return make_response(redirect('/admin_page'))
 
 # 查看用户信息
 @app.route("/admin_userdetails/<id>",methods=["GET","POST"])
@@ -227,6 +392,13 @@ def admin_userdetails(id):
 def admin_Teacherdetails(id):
     result = magen.checkUser1(id)
     return render_template('admin_Teacherdetails.html', result=result)
+
+# 查看公告信息
+@app.route("/admin_Contentdetails/<id>",methods=["GET","POST"])
+def admin_Contentdetails(id):
+    result = magen.checkContent1(id)
+    return render_template('admin_Contentdetails.html', result=result)
+
 
 # 添加学生财务信息
 @app.route("/admin_addUserFinance",methods=["GET","POST"])
@@ -246,6 +418,7 @@ def admin_addUserFinance():
         # print(result)
         return make_response(redirect('/admin_adduser_success/admin_addUserFinance'))
 
+# 修改学生财务信息
 @app.route("/admin_updateUserFinance/<id>",methods=["GET","POST"])
 def admin_updateUserFinance(id):
     if request.method == "GET":
@@ -263,11 +436,25 @@ def admin_updateUserFinance(id):
         magen.updateUserFinance(id,user_xuefei,user_shufei,user_zhusufei,user_sum,user_zhifu,user_qian,userid)
         return make_response(redirect('/admin_page'))
 
+# 删除学生财务信息
 @app.route("/admin_deleteUserFinance/<id>")
 def admin_deleteUserFinance(id):
     magen.deleteUserFinance(id)
     return make_response(redirect('/admin_page'))
 
+# 删除学生财务信息
+@app.route("/admin_deleteTeacherFinance/<id>")
+def admin_deleteTeacherFinance(id):
+    magen.deleteTeacherFinance(id)
+    return make_response(redirect('/admin_page'))
+
+# 删除公告信息
+@app.route("/admin_deleteContent/<id>")
+def admin_deleteContent(id):
+    magen.deleteContent(id)
+    return make_response(redirect('/admin_page'))
+
+# admin修改密码
 @app.route("/admin_updatepassword",methods=["GET","POST"])
 def admin_updatepassword():
     if request.method == "POST":

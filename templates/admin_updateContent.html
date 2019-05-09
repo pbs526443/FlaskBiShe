@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %} 添加用户 {% endblock %}
+{% block grzx %}
+<div class="col-md-3 col-xs-3">
+</div>
+<div class="col-md-3 col-xs-3">
+</div>
+{% endblock %}
+{% block content %}
+<div class="div_logind" style="padding-top: 100px;">
+    <div class="container">
+        <div class="btn-group" style="width: 1140px; height: 650px; text-align: center;">
+            <form action="/admin_updateContent/{{result._id}}" method="post">
+                <ul class="list-group col-md-6  col-xs-6 col-md-offset-3 col-xs-offset-3">
+                    <li class="list-group-item" style="width: 555px;">
+                        <h1>添加公告</h1>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                            <span class="input-group-addon">内容</span>
+                            <textarea name="content" class="form-control" cols="30" rows="10" >{{result.content}}</textarea>
+                        </div>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <div class="input-group col-md-8 col-md-offset-2  col-xs-8 col-xs-offset-2">
+                            <span class="input-group-addon">I &nbsp; D</span>
+                            <input type="text" class="form-control input-lg" name="tid" value="{{result.tid}}"/>
+                        </div>
+                    </li>
+                    <li class="list-group-item" style="width: 555px;">
+                        <input type="submit" class="btn btn-danger btn-lg" style="width: 50%;" value="提交" /><a href="/admin_page" class="btn btn-primary btn-lg" style="width: 50%">返回首页</a>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

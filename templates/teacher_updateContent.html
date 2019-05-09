@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %} 添加用户 {% endblock %}
+{% block grzx %}
+<div class="col-md-3 col-xs-3">
+</div>
+<div class="col-md-3 col-xs-3">
+</div>
+{% endblock %}
+{% block content %}
+<div class="div_logind" style=" padding-top: 100px;">
+    <div class="container">
+        <div class="btn-group" style="width: 1140px; height: 650px; text-align: center;">
+            <form action="/teacher_updateContent/{{result._id}}" method="post">
+				<ul class="list-group col-md-6  col-xs-6 col-md-offset-3 col-xs-offset-3">
+					<li class="list-group-item text-center" style="width: 555px;">
+						<h1>修改公告</h1>
+					</li>
+					<li class="list-group-item">
+						<span class="input-group-addon">内容</span>
+						<textarea name="content" class="form-control" rows="10">{{result.content}}</textarea>
+					</li>
+					<li class="list-group-item">
+						<input type="submit" class="btn btn-danger btn-lg" style="width: 100%;" value="发布" />
+					</li>
+				</ul>
+			</form>
+        </div>
+    </div>
+</div>
+{% endblock %}

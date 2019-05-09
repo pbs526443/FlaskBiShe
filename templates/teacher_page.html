@@ -7,7 +7,7 @@
 </div>
 <div class="col-md-3 col-xs-3 text-center">
 	<li>
-		<a href="/user_personal" class="btn btn-primary"><h3>个人中心</h3></a>
+		<a href="/teacher_personal" class="btn btn-primary"><h3>个人中心</h3></a>
 	</li>
 </div>
 {% endblock %}
@@ -31,7 +31,12 @@
 						</a>
 					</li>
 					<li role="presentation">
-						<a href="#tab4" aria-controls="outbox1" role="tab" data-toggle="tab">
+						<a href="#tab4" aria-controls="outbox" role="tab" data-toggle="tab">
+							<h3>我的公告</h3>
+						</a>
+					</li>
+					<li role="presentation">
+						<a href="#tab5" aria-controls="outbox1" role="tab" data-toggle="tab">
 							<h3>修改密码</h3>
 						</a>
 					</li>
@@ -86,32 +91,29 @@
 								<tr>
 									<th> <h4>编号</h4></th>
 									<th> <h4>姓名</h4></th>
-									<th><h4>学费</h4></th>
-									<th><h4>书费</h4></th>
-									<th><h4>住宿费</h4></th>
+									<th><h4>基础工资</h4></th>
+									<th><h4>补贴</h4></th>
+									<th><h4>津贴</h4></th>
+									<th><h4>税收</h4></th>
 									<th><h4>总金额</h4></th>
-									<th><h4>已支付</h4></th>
-									<th><h4>欠费金额</h4></th>
+									<th><h4>日期</h4></th>
 								</tr>
 									{% if finance %}
 										{% for result in finance %}
 											<tr>
-
 												<th><h4>{{loop.index}}</h4></th>
 												<th><h4>{{result.xm}}</h4></th>
-												<th><h4>{{result.user_xuefei}}</h4></th>
-												<th><h4>{{result.user_shufei}}</h4></th>
-												<th><h4>{{result.user_zhusufei}}</h4></th>
-												<th><h4>{{result.user_sum}}</h4></th>
-												<th><h4>{{result.user_zhifu}}</h4></th>
-												<th><h4>{{result.user_qian}}</h4></th>
+												<th><h4>{{result.t_wages}}</h4></th>
+												<th><h4>{{result.t_subsidy}}</h4></th>
+												<th><h4>{{result.t_allowance}}</h4></th>
+												<th><h4>{{result.t_tax}}</h4></th>
+												<th><h4>{{result.t_sum}}</h4></th>
+												<th><h4>{{result.t_data}}</h4></th>
 											</tr>
 										{% endfor %}
 									{% else %}
 									<tr>
-										<th><h4>1.</h4></th>
-										<th><h4>没有学费</h4></th>
-										<th><h4>没有书费</h4></th>
+										<h4>无</h4>
 									</tr>
 								{% endif %}
 							</table>
@@ -141,10 +143,50 @@
 					</table>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="tab4">
+					<div class="col-md-6 col-xs-6">
+						<form action="/teacher_addContent" method="post">
+							<ul class="list-group">
+								<li class="list-group-item text-center">
+									<h1>发布公告</h1>
+								</li>
+								<li class="list-group-item">
+									<span class="input-group-addon">内容</span>
+									<textarea name="content" class="form-control" rows="10"></textarea>
+								</li>
+								<li class="list-group-item">
+									<input type="submit" class="btn btn-danger btn-lg" style="width: 100%;" value="发布" />
+								</li>
+							</ul>
+						</form>
+					</div>
+					<div class="col-md-6 col-xs-6">
+						<div class="panel panel-default text-center">
+							<div class="panel-heading">
+								<h1>我的公告列表</h1>
+							</div>
+							{% if teachercontent %}
+								{% for result in teachercontent %}
+								<div class="panel-body">
+									<small>{{result.content}}</small>
+								</div>
+								<div class="panel-footer text-right">
+									<a href="/teacher_updateContent/{{result._id}}" class="btn btn-info" style="width: 49%">修改</a>
+									<a href="/teacher_deleteContent/{{result._id}}" class="btn btn-danger" style="width: 49%">删除</a>
+								</div>
+								{% endfor %}
+							{% else %}
+								<div class="panel panel-primary">
+									<div class="panel-heading"> <h2>没有历史公告</h2> </div>
+								</div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+				<div role="tabpanel" class="tab-pane" id="tab5">
 					<div class="div_logind" style="margin-top: 40px;">
 						<div class="container">
 							<div class="btn-group" style="text-align: center;">
-								<form action="/user_updatepassword" method="post">
+								<form action="/teacher_updatepassword" method="post">
 									<ul class="list-group col-md-8 col-xs-8 col-md-offset-2 col-xs-offset-2">
 										<li class="list-group-item" style="width: 555px;">
 											<h1>修改密码界面</h1>
