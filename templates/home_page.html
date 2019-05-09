@@ -119,18 +119,25 @@
 					</div>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="tab3">
-					<table class="table table-bordered table-hover table-striped">
+					<div class="col-md-5 col-xs-5">
+						<table class="table table-bordered table-hover table-striped">
 						<tr>
 							<th> <h4>姓名</h4></th>
 							<th><h4>理由</h4></th>
 							<th><h4>状态</h4></th>
 						</tr>
-						{% if liuxiao %}
-							{% for result in liuxiao %}
+						{% if Leavingschool %}
+							{% for result in Leavingschool %}
 								<tr>
-									<th><h4>{{result.user_name}}</h4></th>
-									<th><h4>{{result.user_liyou}}</h4></th>
-									<th><h4>{{result.user_ztai}}</h4></th>
+									{% if result.user_ztai == 1 %}
+										<th><h4>{{result.user_name}}</h4></th>
+										<th><h4>{{result.user_liyou}}</h4></th>
+										<th><h4>通过</h4></th>
+									{% elif result.user_ztai == 2 %}
+										<th><h4>{{result.user_name}}</h4></th>
+										<th><h4>{{result.user_liyou}}</h4></th>
+										<th><h4>未通过</h4></th>
+									{% endif %}
 								</tr>
 							{% endfor %}
 						{% else %}
@@ -139,6 +146,38 @@
 							</tr>
 						{% endif %}
 					</table>
+					</div>
+					<div class="col-md-7 col-xs-7">
+						<table class="table table-bordered table-hover table-striped">
+						<tr>
+							<th> <h4>姓名</h4></th>
+							<th><h4>理由</h4></th>
+							<th><h4>状态</h4></th>
+							<th><h4>是否修改</h4></th>
+						</tr>
+						{% if Leavingschool %}
+							{% for result in Leavingschool %}
+								<tr>
+									{% if result.user_ztai == 0 %}
+										<th><h4>{{result.user_name}}</h4></th>
+										<th><h4>{{result.user_liyou}}</h4></th>
+										<th><h4>待审核</h4></th>
+										<th>
+											<a href="/user_updateLeavingschool/{{result.id}}" class="btn btn-info" style="width: 100%">修改</a>
+										</th>
+									{% endif %}
+								</tr>
+							{% endfor %}
+						{% else %}
+							<tr>
+								<h4>还没有申请</h4>
+							</tr>
+						{% endif %}
+					</table>
+						<div class="col-md-8 col-xs-8 col-md-offset-4 col-xs-offset-4">
+						<a href="/user_addLeavingschool" class="btn btn-primary admin-a1"><h4>申请</h4></a>
+					</div>
+					</div>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="tab4">
 					<div class="div_logind" style="margin-top: 40px;">

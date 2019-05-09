@@ -155,13 +155,24 @@
 							<th> <h4>姓名</h4></th>
 							<th><h4>理由</h4></th>
 							<th><h4>状态</h4></th>
+							<th><h4></h4></th>
 						</tr>
-						{% if liuxiao %}
-							{% for result in liuxiao %}
+						{% if Leavingschool %}
+							{% for result in Leavingschool %}
 								<tr>
 									<th><h4>{{result.user_name}}</h4></th>
 									<th><h4>{{result.user_liyou}}</h4></th>
-									<th><h4>{{result.user_ztai}}</h4></th>
+									{% if result.user_ztai == 0 %}
+										<th><h4>待审核</h4></th>
+									{% elif result.user_ztai == 1%}
+										<th><h4>通过</h4></th>
+									{% else %}
+										<th><h4>未通过</h4></th>
+									{% endif %}
+									<th>
+										<a href="/admin_updateLeavingschool/{{result.id}}" class="btn btn-info" style="width: 49%">修改</a>
+										<a href="/admin_deleteLeavingschool/{{result.id}}" class="btn btn-danger" style="width: 49%">删除</a>
+									</th>
 								</tr>
 							{% endfor %}
 						{% else %}
@@ -170,6 +181,7 @@
 							</tr>
 						{% endif %}
 					</table>
+					<a href="/admin_addLeavingschool" class="btn btn-primary admin-a1"><h4>增加</h4></a>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="tab4">
 					<div class="panel panel-default">
@@ -185,35 +197,35 @@
 						</div>
 						<div class="panel-body">
 							<table class="table table-bordered table-hover table-striped">
-						<tr>
-							<th> <h4>编号</h4></th>
-							<th> <h4>I D</h4></th>
-							<th><h4>账号</h4></th>
-							<th><h4>密码</h4></th>
-							<th><h4>姓名</h4></th>
-                            <th><h4></h4></th>
-						</tr>
-						{% if teacher %}
-							{% for result in teacher %}
 								<tr>
-									<th><h4>{{loop.index}}</h4></th>
-									<th><h4>{{result.id}}</h4></th>
-									<th><h4>{{result.username}}</h4></th>
-									<th><h4>{{result.password}}</h4></th>
-									<th><h4>{{result.xm}}</h4></th>
-									<th>
-										<a href="/admin_updateTeacher/{{result.id}}" class="btn btn-info" style="width: 32%">修改</a>
-										<a href="/admin_Teacherdetails/{{result.id}}" class="btn btn-info" style="width: 32%">详情</a>
-										<a href="/admin_deleteteacher/{{result.id}}" class="btn btn-danger" style="width: 32%">删除</a>
-									</th>
+									<th> <h4>编号</h4></th>
+									<th> <h4>I D</h4></th>
+									<th><h4>账号</h4></th>
+									<th><h4>密码</h4></th>
+									<th><h4>姓名</h4></th>
+									<th><h4></h4></th>
 								</tr>
-							{% endfor %}
-						{% else %}
-							<tr>
-								<h4>无</h4>
-							</tr>
-						{% endif %}
-					</table>
+								{% if teacher %}
+									{% for result in teacher %}
+										<tr>
+											<th><h4>{{loop.index}}</h4></th>
+											<th><h4>{{result.id}}</h4></th>
+											<th><h4>{{result.username}}</h4></th>
+											<th><h4>{{result.password}}</h4></th>
+											<th><h4>{{result.xm}}</h4></th>
+											<th>
+												<a href="/admin_updateTeacher/{{result.id}}" class="btn btn-info" style="width: 32%">修改</a>
+												<a href="/admin_Teacherdetails/{{result.id}}" class="btn btn-info" style="width: 32%">详情</a>
+												<a href="/admin_deleteteacher/{{result.id}}" class="btn btn-danger" style="width: 32%">删除</a>
+											</th>
+										</tr>
+									{% endfor %}
+								{% else %}
+									<tr>
+										<h4>无</h4>
+									</tr>
+								{% endif %}
+							</table>
 							<a href="/admin_addTeacher" class="btn btn-primary admin-a1"><h4>增加</h4> </a>
 						</div>
 					</div>

@@ -121,26 +121,63 @@
 					</div>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="tab3">
-					<table class="table table-bordered table-hover table-striped">
-						<tr>
-							<th> <h4>姓名</h4></th>
-							<th><h4>理由</h4></th>
-							<th><h4>状态</h4></th>
-						</tr>
-						{% if liuxiao %}
-							{% for result in liuxiao %}
-								<tr>
-									<th><h4>{{result.user_name}}</h4></th>
-									<th><h4>{{result.user_liyou}}</h4></th>
-									<th><h4>{{result.user_ztai}}</h4></th>
-								</tr>
-							{% endfor %}
-						{% else %}
+					<div class="col-md-6 col-xs-6">
+						<table class="table table-bordered table-hover table-striped">
 							<tr>
-								<h4>还没有申请</h4>
+								<th> <h4>姓名</h4></th>
+								<th><h4>理由</h4></th>
+								<th><h4>状态</h4></th>
 							</tr>
-						{% endif %}
-					</table>
+							{% if Leavingschool %}
+								{% for result in Leavingschool %}
+									<tr>
+										{% if result.user_ztai == 1%}
+											<th><h4>{{result.user_name}}</h4></th>
+											<th><h4>{{result.user_liyou}}</h4></th>
+											<th><h4>通过</h4></th>
+										{% elif result.user_ztai == 2 %}
+											<th><h4>{{result.user_name}}</h4></th>
+											<th><h4>{{result.user_liyou}}</h4></th>
+											<th><h4>未通过</h4></th>
+										{% endif %}
+									</tr>
+								{% endfor %}
+							{% else %}
+								<tr>
+									<h4>还没有申请</h4>
+								</tr>
+							{% endif %}
+						</table>
+					</div>
+					<div class="col-md-6 col-xs-6">
+						<table class="table table-bordered table-hover table-striped">
+							<tr>
+								<th> <h4>姓名</h4></th>
+								<th><h4>理由</h4></th>
+								<th><h4>状态</h4></th>
+								<th><h4>是否通过</h4></th>
+							</tr>
+							{% if Leavingschool %}
+								{% for result in Leavingschool %}
+									<tr>
+										{% if result.user_ztai == 0 %}
+											<th><h4>{{result.user_name}}</h4></th>
+											<th><h4>{{result.user_liyou}}</h4></th>
+											<th><h4>待审核</h4></th>
+											<th>
+												<a href="/teacher_y_updateLeavingschool/{{result.id}}" class="btn btn-info" style="width: 48%">通过</a>
+												<a href="/teacher_n_updateLeavingschool/{{result.id}}" class="btn btn-info" style="width: 48%">未通过</a>
+											</th>
+										{% endif %}
+									</tr>
+								{% endfor %}
+							{% else %}
+								<tr>
+									<h4>还没有申请</h4>
+								</tr>
+							{% endif %}
+						</table>
+					</div>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="tab4">
 					<div class="col-md-6 col-xs-6">
