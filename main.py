@@ -26,6 +26,33 @@ def home_page():
         result.tname = xm
     return render_template("home_page.html",finance=result2,Leavingschool = Leavingschool,uname=username,content=content,content1=content1)
 
+# 我的学费界面
+@app.route('/user_financelist')
+def user_financelist():
+    username = request.cookies.get("username")
+    userid = request.cookies.get("userid")
+    userid = int(userid)
+    finance = magen.checkUserFinance1(userid)
+    return render_template("user_financelist.html",finance=finance,uname=username)
+
+# 留校申请界面
+@app.route('/user_leavingschool')
+def user_leavingschool():
+    username = request.cookies.get("username")
+    userid = request.cookies.get("userid")
+    userid = int(userid)
+    Leavingschool = magen.checkLeavingschool1(userid)
+    for result in Leavingschool:
+        xm = magen.checkTeacher1(result.tid).xm
+        result.tname = xm
+    return render_template("user_leavingschool.html",Leavingschool = Leavingschool,uname=username)
+
+# 用户修改密码界面
+@app.route('/user_updatepassword1')
+def user_updatepassword1():
+    username = request.cookies.get("username")
+    return render_template("user_updatepassword.html",uname=username)
+
 # 用户修改密码
 @app.route("/user_updatepassword",methods=["GET","POST"])
 def user_updatepassword():
@@ -34,7 +61,7 @@ def user_updatepassword():
         password = request.form["password"]
         password1 = request.form["password1"]
         if password1 == password:
-            return make_response(redirect('/home_page'))
+            return make_response(redirect('/user_updatepassword1'))
         else:
             magen.updateUserpassword(id,password1)
             return make_response(redirect('/'))
@@ -55,13 +82,8 @@ def user_personal():
         address = request.form['address']
         phone = request.form['phone']
         magen.updateuser1(id,xm,gender,qq,email,address,phone)
-        return make_response(redirect('/user_personal_success'))
+        return make_response(redirect('/user_personal'))
 
-# 用户修改成功
-@app.route("/user_personal_success")
-def user_personal_success():
-    username = request.cookies.get("username")
-    return render_template("user_personal_success.html",uname=username)
 
 # 用户申请离校
 @app.route("/user_addLeavingschool",methods=["POST","GET"])

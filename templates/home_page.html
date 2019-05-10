@@ -1,33 +1,21 @@
-{% extends "base.html" %}
-{% block content %}
-		<div class="container LTAB">
-			<div class="col-md-2 col-xs-2 text-center">
-				<ul class="nav nav-pills nav-stacked " role="tablist" id="vtab">
-					<li role="presentation" class="active">
-						<a href="#tab1" aria-controls="home" role="tab" data-toggle="tab">
-							<h3>公告栏目</h3>
-						</a>
-					</li>
-					<li role="presentation">
-						<a href="#tab2" aria-controls="inbox" role="tab" data-toggle="tab">
-							<h3>我的财务</h3>
-						</a>
-					</li>
-					<li role="presentation">
-						<a href="#tab3" aria-controls="outbox" role="tab" data-toggle="tab">
-							<h3>留校申请</h3>
-						</a>
-					</li>
-					<li role="presentation">
-						<a href="#tab4" aria-controls="outbox1" role="tab" data-toggle="tab">
-							<h3>修改密码</h3>
-						</a>
-					</li>
-				</ul>
-			</div>
-			<div class="tab-content vertical-tab-content col-md-10 col-xs-10">
-				<div role="tabpanel" class="tab-pane active" id="tab1">
-					<div class="col-md-8">
+{% extends "home_base.html" %}
+{% block left %}
+<ul class="nav nav-pills nav-stacked text-center">
+	<hr>
+	<li role="presentation" class="active"><a href="/home_page">公告信息</a></li>
+	<hr>
+	<li role="presentation"><a href="/user_financelist">我的学费</a></li>
+	<hr>
+	<li role="presentation"><a href="/user_leavingschool">留校列表</a></li>
+    <li role="presentation" ><a href="/user_addLeavingschool">留校申请</a></li>
+	<hr>
+	<li role="presentation"><a href="/user_personal">个人中心</a></li>
+	<li role="presentation"><a href="/user_updatepassword1">修改密码</a></li>
+</ul>
+{% endblock %}
+{% block right %}
+	<div class="col-md-10">
+		<div class="col-md-8">
 						{% if content %}
 							{% for result in content %}
 								<div class="panel panel-primary">
@@ -46,160 +34,22 @@
 							</div>
 						{% endif %}
 					</div>
-					<div class="col-md-4">
-						{% if content %}
-							<div class="panel panel-primary">
-								<div class="panel-heading"> <h2>历史公告</h2> </div>
-								{% for result in content1 %}
-								<div class="panel-body">
-									<small>{{result.content}}</small>
-								</div>
-								<div class="panel-footer text-right">  发布人：{{result.xm}} </div>
-								{% endfor %}
-							</div>
-						{% else %}
-							<div class="panel panel-primary">
-								<div class="panel-heading"> <h2>没有历史公告</h2> </div>
-							</div>
-						{% endif %}
+		<div class="col-md-4">
+			{% if content %}
+				<div class="panel panel-info">
+					<div class="panel-heading"> <h4>历史公告</h4> </div>
+					{% for result in content1 %}
+					<div class="panel-body">
+						<small>{{result.content}}</small>
 					</div>
+					<div class="panel-footer text-right">  发布人：{{result.xm}} </div>
+					{% endfor %}
 				</div>
-				<div role="tabpanel" class="tab-pane" id="tab2">
-					<div class="panel panel-default">
-						<div class="panel-heading text-center">
-							<h1>我的财务账单</h1>
-						</div>
-						<div class="panel-body">
-							<table class="table table-bordered table-hover table-striped">
-								<tr>
-									<th> <h4>编号</h4></th>
-									<th> <h4>姓名</h4></th>
-									<th><h4>学费</h4></th>
-									<th><h4>书费</h4></th>
-									<th><h4>住宿费</h4></th>
-									<th><h4>总金额</h4></th>
-									<th><h4>已支付</h4></th>
-									<th><h4>欠费金额</h4></th>
-								</tr>
-									{% if finance %}
-										{% for result in finance %}
-											<tr>
-
-												<th><h4>{{loop.index}}</h4></th>
-												<th><h4>{{result.xm}}</h4></th>
-												<th><h4>{{result.user_xuefei}}</h4></th>
-												<th><h4>{{result.user_shufei}}</h4></th>
-												<th><h4>{{result.user_zhusufei}}</h4></th>
-												<th><h4>{{result.user_sum}}</h4></th>
-												<th><h4>{{result.user_zhifu}}</h4></th>
-												<th><h4>{{result.user_qian}}</h4></th>
-											</tr>
-										{% endfor %}
-									{% else %}
-									<tr>
-										<th><h4>1.</h4></th>
-										<th><h4>没有学费</h4></th>
-										<th><h4>没有书费</h4></th>
-									</tr>
-								{% endif %}
-							</table>
-						</div>
-					</div>
+			{% else %}
+				<div class="panel panel-primary">
+					<div class="panel-heading"> <h2>没有历史公告</h2> </div>
 				</div>
-				<div role="tabpanel" class="tab-pane" id="tab3">
-					<div class="col-md-5 col-xs-5">
-						<table class="table table-bordered table-hover table-striped">
-						<tr>
-							<th> <h4>姓名</h4></th>
-							<th><h4>理由</h4></th>
-							<th><h4>状态</h4></th>
-							<th><h4>审核人</h4></th>
-						</tr>
-						{% if Leavingschool %}
-							{% for result in Leavingschool %}
-								<tr>
-									{% if result.user_ztai == 1 %}
-										<th><h4>{{result.user_name}}</h4></th>
-										<th><h4>{{result.user_liyou}}</h4></th>
-										<th><h4>通过</h4></th>
-										<th><h4>{{result.tname}}</h4></th>
-									{% elif result.user_ztai == 2 %}
-										<th><h4>{{result.user_name}}</h4></th>
-										<th><h4>{{result.user_liyou}}</h4></th>
-										<th><h4>未通过</h4></th>
-										<th><h4>{{result.tname}}</h4></th>
-									{% endif %}
-								</tr>
-							{% endfor %}
-						{% else %}
-							<tr>
-								<h4>还没有申请</h4>
-							</tr>
-						{% endif %}
-					</table>
-					</div>
-					<div class="col-md-7 col-xs-7">
-						<table class="table table-bordered table-hover table-striped">
-						<tr>
-							<th> <h4>姓名</h4></th>
-							<th><h4>理由</h4></th>
-							<th><h4>状态</h4></th>
-							<th><h4>是否修改</h4></th>
-						</tr>
-						{% if Leavingschool %}
-							{% for result in Leavingschool %}
-								<tr>
-									{% if result.user_ztai == 0 %}
-										<th><h4>{{result.user_name}}</h4></th>
-										<th><h4>{{result.user_liyou}}</h4></th>
-										<th><h4>待审核</h4></th>
-										<th>
-											<a href="/user_updateLeavingschool/{{result.id}}" class="btn btn-info" style="width: 100%">修改</a>
-										</th>
-									{% endif %}
-								</tr>
-							{% endfor %}
-						{% else %}
-							<tr>
-								<h4>还没有申请</h4>
-							</tr>
-						{% endif %}
-					</table>
-						<div class="col-md-8 col-xs-8 col-md-offset-4 col-xs-offset-4">
-						<a href="/user_addLeavingschool" class="btn btn-primary admin-a1"><h4>申请</h4></a>
-					</div>
-					</div>
-				</div>
-				<div role="tabpanel" class="tab-pane" id="tab4">
-					<div class="div_logind" style="margin-top: 40px;">
-						<div class="container">
-							<div class="btn-group" style="text-align: center;">
-								<form action="/user_updatepassword" method="post">
-									<ul class="list-group col-md-8 col-xs-8 col-md-offset-2 col-xs-offset-2">
-										<li class="list-group-item" style="width: 555px;">
-											<h1>修改密码界面</h1>
-										</li>
-										<li class="list-group-item" style="width: 555px;">
-											<div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
-												<span class="input-group-addon">原密码</span>
-												<input type="text" class="form-control input-lg" name="password" placeholder="请输入您的原密码"/>
-											</div>
-										</li>
-										<li class="list-group-item" style="width: 555px;">
-											<div class="input-group col-md-8 col-md-offset-2  col-xs-8 col-xs-offset-2">
-												<span class="input-group-addon">新密码</span>
-												<input type="password" class="form-control input-lg" name="password1" placeholder="请输入您的新密码"/>
-											</div>
-										</li>
-										<li class="list-group-item" style="width: 555px;">
-											<input type="submit" class="btn btn-danger btn-lg" style="width: 350px;" name="提交" />
-										</li>
-									</ul>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			{% endif %}
 		</div>
+	</div>
 {% endblock %}

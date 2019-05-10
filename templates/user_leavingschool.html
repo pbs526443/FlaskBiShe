@@ -1,0 +1,82 @@
+{% extends "home_base.html" %}
+{% block left %}
+<ul class="nav nav-pills nav-stacked text-center">
+	<hr>
+	<li role="presentation" ><a href="/home_page">公告信息</a></li>
+	<hr>
+	<li role="presentation"><a href="/user_financelist">我的学费</a></li>
+	<hr>
+	<li role="presentation" class="active"><a href="/user_leavingschool">留校列表</a></li>
+    <li role="presentation" ><a href="/user_addLeavingschool">留校申请</a></li>
+	<hr>
+    <li role="presentation"><a href="/user_personal">个人中心</a></li>
+	<li role="presentation"><a href="/user_updatepassword1">修改密码</a></li>
+</ul>
+{% endblock %}
+{% block right %}
+	<div class="col-md-10">
+		<div class="col-md-5 col-xs-5">
+            <h3>已经审核过</h3>
+            <hr>
+            <table class="table table-bordered table-hover table-striped">
+                <tr>
+                    <th> <h4>姓名</h4></th>
+                    <th><h4>理由</h4></th>
+                    <th><h4>状态</h4></th>
+                    <th><h4>审核人</h4></th>
+                </tr>
+                {% if Leavingschool %}
+                    {% for result in Leavingschool %}
+                        <tr>
+                            {% if result.user_ztai == 1 %}
+                                <th><h4>{{result.user_name}}</h4></th>
+                                <th><h4>{{result.user_liyou}}</h4></th>
+                                <th><h4>通过</h4></th>
+                                <th><h4>{{result.tname}}</h4></th>
+                            {% elif result.user_ztai == 2 %}
+                                <th><h4>{{result.user_name}}</h4></th>
+                                <th><h4>{{result.user_liyou}}</h4></th>
+                                <th><h4>未通过</h4></th>
+                                <th><h4>{{result.tname}}</h4></th>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <h4>还没有申请</h4>
+                    </tr>
+                {% endif %}
+            </table>
+        </div>
+        <div class="col-md-7 col-xs-7">
+            <h3>未审核过</h3>
+            <hr>
+            <table class="table table-bordered table-hover table-striped">
+                <tr>
+                    <th> <h4>姓名</h4></th>
+                    <th><h4>理由</h4></th>
+                    <th><h4>状态</h4></th>
+                    <th><h4>是否修改</h4></th>
+                </tr>
+                {% if Leavingschool %}
+                    {% for result in Leavingschool %}
+                        <tr>
+                            {% if result.user_ztai == 0 %}
+                                <th><h4>{{result.user_name}}</h4></th>
+                                <th><h4>{{result.user_liyou}}</h4></th>
+                                <th><h4>待审核</h4></th>
+                                <th>
+                                    <a href="/user_updateLeavingschool/{{result.id}}" class="btn btn-info" style="width: 100%">修改</a>
+                                </th>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <h4>还没有申请</h4>
+                    </tr>
+                {% endif %}
+            </table>
+        </div>
+	</div>
+{% endblock %}
