@@ -113,6 +113,7 @@
 							<th> <h4>姓名</h4></th>
 							<th><h4>理由</h4></th>
 							<th><h4>状态</h4></th>
+							<th><h4>审核人</h4></th>
 						</tr>
 						{% if Leavingschool %}
 							{% for result in Leavingschool %}
@@ -121,10 +122,12 @@
 										<th><h4>{{result.user_name}}</h4></th>
 										<th><h4>{{result.user_liyou}}</h4></th>
 										<th><h4>通过</h4></th>
+										<th><h4>{{result.tname}}</h4></th>
 									{% elif result.user_ztai == 2 %}
 										<th><h4>{{result.user_name}}</h4></th>
 										<th><h4>{{result.user_liyou}}</h4></th>
 										<th><h4>未通过</h4></th>
+										<th><h4>{{result.tname}}</h4></th>
 									{% endif %}
 								</tr>
 							{% endfor %}

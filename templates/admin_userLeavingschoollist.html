@@ -1,0 +1,78 @@
+{% extends "admin_base.html" %}
+{% block left %}
+<ul class="nav nav-pills nav-stacked text-center">
+	<hr>
+	<li role="presentation" ><a href="/admin_page">学生信息列表</a></li>
+	<li role="presentation"><a href="/admin_adduser">添加学生信息</a></li>
+	<hr>
+	<li role="presentation"><a href="/admin_userfinancelist">学生学费列表</a></li>
+	<li role="presentation"><a href="/admin_addUserFinance">添加学生学费</a></li>
+	<hr>
+	<li role="presentation" class="active"><a href="/admin_userLeavingschoollist">学生留校列表</a></li>
+	<li role="presentation"><a href="/admin_addLeavingschool">添加学生留校</a></li>
+	<hr>
+	<li role="presentation"><a href="/admin_teacherlist">教师信息列表</a></li>
+	<li role="presentation"><a href="/admin_addTeacher">添加教师信息</a></li>
+	<hr>
+	<li role="presentation" ><a href="/admin_TeacherFinancelist">教师工资列表</a></li>
+	<li role="presentation" ><a href="/admin_addTeacherFinance">添加教师工资</a></li>
+	<hr>
+	<li role="presentation" ><a href="/addmin_Contentlist">公告信息列表</a></li>
+	<li role="presentation" ><a href="/admin_addContent">添加公告信息</a></li>
+	<hr>
+	<li role="presentation" class="active"><a href="/admin_updatepassword1">修改密码</a></li>
+</ul>
+{% endblock %}
+{% block right %}
+	<div class="col-md-10">
+		<div class="panel panel-default">
+            <div class="panel-heading">
+                <form action="/admin_checkuserfinance" method="post">
+                    <div class="input-group col-md-6 col-md-offset-6 col-xs-6 col-xs-offset-6">
+                        <input type="text" class="form-control input-lg" name="xm" placeholder="请输入姓名"/>
+                        <span class="input-group-btn">
+                            <input type="submit" class="btn btn-danger btn-lg" name="提交" />
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered table-hover table-striped">
+                    <tr>
+                        <th> <h4>姓名</h4></th>
+                        <th><h4>理由</h4></th>
+                        <th><h4>状态</h4></th>
+                        <th><h4>审核人</h4></th>
+                        <th><h4></h4></th>
+                    </tr>
+                    {% if Leavingschool %}
+                        {% for result in Leavingschool %}
+                            <tr>
+                                <th><h4>{{result.user_name}}</h4></th>
+                                <th><h4>{{result.user_liyou}}</h4></th>
+                                {% if result.user_ztai == 0 %}
+                                    <th><h4>待审核</h4></th>
+                                    <th><h4>无</h4></th>
+                                {% elif result.user_ztai == 1%}
+                                    <th><h4>通过</h4></th>
+                                    <th><h4>{{result.tname}}</h4></th>
+                                {% else %}
+                                    <th><h4>未通过</h4></th>
+                                    <th><h4>{{result.tname}}</h4></th>
+                                {% endif %}
+                                <th>
+                                    <a href="/admin_updateLeavingschool/{{result.id}}" class="btn btn-info" style="width: 49%">修改</a>
+                                    <a href="/admin_deleteLeavingschool/{{result.id}}" class="btn btn-danger" style="width: 49%">删除</a>
+                                </th>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <h4>还没有申请</h4>
+                        </tr>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+	</div>
+{% endblock %}

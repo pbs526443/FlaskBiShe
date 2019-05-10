@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="margin-top: 70px">
+    <div class="col-md-2 col-xs-2">
+        {% block left %}
+        {% endblock %}
+    </div>
+    <div class="col-md-10 col-xs-10">
+        {% block right %}
+        {% endblock %}
+    </div>
+    {% endblock %}
+</div>

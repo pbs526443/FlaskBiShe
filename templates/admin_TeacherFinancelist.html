@@ -1,0 +1,78 @@
+{% extends "admin_base.html" %}
+{% block left %}
+<ul class="nav nav-pills nav-stacked text-center">
+	<hr>
+	<li role="presentation" ><a href="/admin_page">学生信息列表</a></li>
+	<li role="presentation"><a href="/admin_adduser">添加学生信息</a></li>
+	<hr>
+	<li role="presentation"><a href="/admin_userfinancelist">学生学费列表</a></li>
+	<li role="presentation"><a href="/admin_addUserFinance">添加学生学费</a></li>
+	<hr>
+	<li role="presentation"><a href="/admin_userLeavingschoollist">学生留校列表</a></li>
+	<li role="presentation"><a href="/admin_addLeavingschool">添加学生留校</a></li>
+	<hr>
+	<li role="presentation" ><a href="/admin_teacherlist">教师信息列表</a></li>
+	<li role="presentation"><a href="/admin_addTeacher">添加教师信息</a></li>
+	<hr>
+	<li role="presentation" class="active"><a href="/admin_TeacherFinancelist">教师工资列表</a></li>
+	<li role="presentation" ><a href="/admin_addTeacherFinance">添加教师工资</a></li>
+	<hr>
+	<li role="presentation" ><a href="/addmin_Contentlist">公告信息列表</a></li>
+	<li role="presentation" ><a href="/admin_addContent">添加公告信息</a></li>
+	<hr>
+	<li role="presentation" ><a href="/admin_updatepassword1">修改密码</a></li>
+</ul>
+{% endblock %}
+{% block right %}
+	<div class="col-md-10">
+		<div class="panel panel-default">
+            <div class="panel-heading">
+                <form action="/admin_checkuser" method="post">
+                    <div class="input-group col-md-6 col-md-offset-6 col-xs-6 col-xs-offset-6">
+                        <input type="text" class="form-control input-lg" name="username" placeholder="请输入账号"/>
+                        <span class="input-group-btn">
+                            <input type="submit" class="btn btn-danger btn-lg" name="提交" />
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered table-hover table-striped">
+                    <tr>
+                        <th> <h4>编号</h4></th>
+                        <th> <h4>姓名</h4></th>
+                        <th><h4>基础工资</h4></th>
+                        <th><h4>补贴</h4></th>
+                        <th><h4>津贴</h4></th>
+                        <th><h4>税收</h4></th>
+                        <th><h4>总金额</h4></th>
+                        <th><h4>日期</h4></th>
+                        <th><h4></h4></th>
+                    </tr>
+                    {% if TeacherFinance %}
+                        {% for result in TeacherFinance %}
+                            <tr>
+                                <th><h4>{{loop.index}}</h4></th>
+                                <th><h4>{{result.xm}}</h4></th>
+                                <th><h4>{{result.t_wages}}</h4></th>
+                                <th><h4>{{result.t_subsidy}}</h4></th>
+                                <th><h4>{{result.t_allowance}}</h4></th>
+                                <th><h4>{{result.t_tax}}</h4></th>
+                                <th><h4>{{result.t_sum}}</h4></th>
+                                <th><h4>{{result.t_data}}</h4></th>
+                                <th>
+                                    <a href="/admin_updateTeacherFinance/{{result._id}}" class="btn btn-info" style="width: 48%">修改</a>
+                                    <a href="/admin_deleteTeacherFinance/{{result._id}}" class="btn btn-danger" style="width: 48%">删除</a>
+                                </th>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <h4>无</h4>
+                        </tr>
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+	</div>
+{% endblock %}
