@@ -1,38 +1,54 @@
-{% extends "base.html" %}
-{% block title %} 添加用户 {% endblock %}
-{% block grzx %}
-<div class="col-md-3 col-xs-3">
-</div>
-<div class="col-md-3 col-xs-3">
-</div>
+{% extends "admin_base.html" %}
+{% block left %}
+<ul class="nav nav-pills nav-stacked text-center">
+	<hr>
+	<li role="presentation" ><a href="/admin_page">学生信息列表</a></li>
+	<li role="presentation"><a href="/admin_adduser">添加学生信息</a></li>
+	<hr>
+	<li role="presentation"><a href="/admin_userfinancelist">学生学费列表</a></li>
+	<li role="presentation"><a href="/admin_addUserFinance">添加学生学费</a></li>
+	<hr>
+	<li role="presentation"><a href="/admin_userLeavingschoollist">学生留校列表</a></li>
+	<li role="presentation"><a href="/admin_addLeavingschool">添加学生留校</a></li>
+	<hr>
+	<li role="presentation"><a href="/admin_teacherlist">教师信息列表</a></li>
+	<li role="presentation"><a href="/admin_addTeacher">添加教师信息</a></li>
+	<hr>
+	<li role="presentation" ><a href="/admin_TeacherFinancelist">教师工资列表</a></li>
+	<li role="presentation" ><a href="/admin_addTeacherFinance">添加教师工资</a></li>
+	<hr>
+	<li role="presentation" class="active"><a href="/addmin_Contentlist">公告信息列表</a></li>
+	<li role="presentation" ><a href="/admin_addContent">添加公告信息</a></li>
+	<hr>
+	<li role="presentation"><a href="/admin_updatepassword1">修改密码</a></li>
+</ul>
 {% endblock %}
-{% block content %}
-<div class="div_logind" style="padding-top: 100px;">
-    <div class="container">
-        <div class="btn-group" style="width: 1140px; height: 650px; text-align: center;">
-            <form action="/admin_updateContent/{{result._id}}" method="post">
-                <ul class="list-group col-md-6  col-xs-6 col-md-offset-3 col-xs-offset-3">
-                    <li class="list-group-item" style="width: 555px;">
-                        <h1>添加公告</h1>
-                    </li>
-                    <li class="list-group-item" style="width: 555px;">
-                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
-                            <span class="input-group-addon">内容</span>
-                            <textarea name="content" class="form-control" cols="30" rows="10" >{{result.content}}</textarea>
-                        </div>
-                    </li>
-                    <li class="list-group-item" style="width: 555px;">
-                        <div class="input-group col-md-8 col-md-offset-2  col-xs-8 col-xs-offset-2">
-                            <span class="input-group-addon">I &nbsp; D</span>
-                            <input type="text" class="form-control input-lg" name="tid" value="{{result.tid}}"/>
-                        </div>
-                    </li>
-                    <li class="list-group-item" style="width: 555px;">
-                        <input type="submit" class="btn btn-danger btn-lg" style="width: 50%;" value="提交" /><a href="/admin_page" class="btn btn-primary btn-lg" style="width: 50%">返回首页</a>
-                    </li>
-                </ul>
-            </form>
+{% block right %}
+	<div class="col-md-10">
+        <h3>修改公告信息</h3>
+        <hr>
+        <div class="container">
+            <div class="btn-group">
+                <form action="/admin_updateContent/{{result._id}}" method="post">
+                    <ul class="list-group col-md-6  col-xs-6 col-md-offset-1 col-xs-offset-1">
+                        <li class="list-group-item" style="width: 555px;">
+                            <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                                <span class="input-group-addon">内容
+                                <textarea name="content" class="form-control" cols="30" rows="10" >{{result.content}}</textarea></span>
+                            </div>
+                        </li>
+                        <li class="list-group-item" style="width: 555px;">
+                            <div class="input-group col-md-8 col-md-offset-2  col-xs-8 col-xs-offset-2">
+                                <span class="input-group-addon">I &nbsp; D</span>
+                                <input type="text" class="form-control input-lg" name="tid" value="{{result.tid}}"/>
+                            </div>
+                        </li>
+                        <li class="list-group-item" style="width: 555px;">
+                            <input type="submit" class="btn btn-danger btn-lg" style="width: 50%;" value="提交" /><a href="/addmin_Contentlist" class="btn btn-primary btn-lg" style="width: 50%">返回上一页</a>
+                        </li>
+                    </ul>
+                </form>
+            </div>
         </div>
-    </div>
-</div>
+	</div>
 {% endblock %}

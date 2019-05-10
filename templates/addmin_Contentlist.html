@@ -49,11 +49,10 @@
                             <tr>
                                 <th><h4>{{loop.index}}</h4></th>
                                 <th><h4>{{result.xm}}</h4></th>
-                                <th><h4>{{result.content[0:10]}}</h4></th>
+                                <th><h4>{{result.content}}</h4></th>
                                 <th>
-                                    <a href="/admin_updateContent/{{result._id}}" class="btn btn-info" style="width: 32%">修改</a>
-                                    <a href="/admin_Contentdetails/{{result._id}}" class="btn btn-info" style="width: 32%">详情</a>
-                                    <a href="/admin_deleteContent/{{result._id}}" class="btn btn-danger" style="width: 32%">删除</a>
+                                    <a href="/admin_updateContent/{{result._id}}" class="btn btn-info" style="width: 48%">修改</a>
+                                    <a href="/admin_deleteContent/{{result._id}}" class="btn btn-danger" style="width: 49%">删除</a>
                                 </th>
                             </tr>
                         {% endfor %}

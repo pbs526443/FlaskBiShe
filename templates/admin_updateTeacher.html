@@ -1,87 +1,103 @@
-{% extends "base.html" %}
-{% block title %} 修改页面 {% endblock %}
-{% block grzx %}
-<div class="col-md-3 col-xs-3">
-</div>
-<div class="col-md-3 col-xs-3">
-</div>
+{% extends "admin_base.html" %}
+{% block left %}
+<ul class="nav nav-pills nav-stacked text-center">
+	<hr>
+	<li role="presentation" ><a href="/admin_page">学生信息列表</a></li>
+	<li role="presentation"><a href="/admin_adduser">添加学生信息</a></li>
+	<hr>
+	<li role="presentation"><a href="/admin_userfinancelist">学生学费列表</a></li>
+	<li role="presentation"><a href="/admin_addUserFinance">添加学生学费</a></li>
+	<hr>
+	<li role="presentation"><a href="/admin_userLeavingschoollist">学生留校列表</a></li>
+	<li role="presentation"><a href="/admin_addLeavingschool">添加学生留校</a></li>
+	<hr>
+	<li role="presentation" class="active"><a href="/admin_teacherlist">教师信息列表</a></li>
+	<li role="presentation"><a href="/admin_addTeacher">添加教师信息</a></li>
+	<hr>
+	<li role="presentation" ><a href="/admin_TeacherFinancelist">教师工资列表</a></li>
+	<li role="presentation" ><a href="/admin_addTeacherFinance">添加教师工资</a></li>
+	<hr>
+	<li role="presentation" ><a href="/addmin_Contentlist">公告信息列表</a></li>
+	<li role="presentation" ><a href="/admin_addContent">添加公告信息</a></li>
+	<hr>
+	<li role="presentation" ><a href="/admin_updatepassword1">修改密码</a></li>
+</ul>
 {% endblock %}
-{% block content %}
-<div class="div_logind" style=" padding-top: 100px;">
-    <div class="container">
-        <div class="btn-group" style="width: 1140px; height: 650px; text-align: center;">
-            <form action="/admin_updateTeacher/{{result.id}}" method="post">
-                <ul class="list-group col-md-6  col-xs-6 col-md-offset-3 col-xs-offset-3">
-                    <li class="list-group-item" style="width: 555px;">
-                        <h1>修改用户</h1>
-                    </li>
-                    <li class="list-group-item" style="width: 555px;">
-                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
-                            <span class="input-group-addon">账号</span>
-                            <input type="text" class="form-control input-lg" name="username" value="{{result.username}}"/>
-                        </div>
-                    </li>
-                    <li class="list-group-item" style="width: 555px;">
-                        <div class="input-group col-md-8 col-md-offset-2  col-xs-8 col-xs-offset-2">
-                            <span class="input-group-addon">密码</span>
-                            <input type="text" class="form-control input-lg" name="password" value="{{result.password}}"/>
-                        </div>
-                    </li>
-                                        <li class="list-group-item" style="width: 555px;">
-                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
-                            <span class="input-group-addon">姓名</span>
-                            <input type="text" class="form-control input-lg" name="xm" value="{{result.xm}}"/>
-                        </div>
-                    </li>
-                    <li class="list-group-item" style="width: 555px;">
-                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
-                            {% if result.gender == 1 %}
-                                <label class="radio-inline">
-                                    <input type="radio" name="gender"  value="1" checked> 男
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="gender" value="0"> 女
-                                </label>
-                            {% else %}
-                                <label class="radio-inline">
-                                <input type="radio" name="gender"  value="1"> 男
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="gender" value="0" checked> 女
-                                </label>
-                            {% endif %}
-                        </div>
-                    </li>
-                    <li class="list-group-item" style="width: 555px;">
-                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
-                            <span class="input-group-addon">Q Q</span>
-                            <input type="text" class="form-control input-lg" name="qq" value="{{result.qq}}"/>
-                        </div>
-                    </li>
-                    <li class="list-group-item" style="width: 555px;">
-                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
-                            <span class="input-group-addon">邮箱</span>
-                            <input type="email" class="form-control input-lg" name="email" value="{{result.email}}"/>
-                        </div>
-                    </li>
-                    <li class="list-group-item" style="width: 555px;">
-                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
-                            <span class="input-group-addon">地址</span>
-                            <input type="text" class="form-control input-lg" name="address" value="{{result.address}}"/>
-                        </div>
-                    </li>
-                    <li class="list-group-item" style="width: 555px;">
-                        <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
-                            <span class="input-group-addon">电话</span>
-                            <input type="text" class="form-control input-lg" name="phone" value="{{result.phone}}"/>
-                        </div>
-                    </li>
-                    <li class="list-group-item" style="width: 555px;">
-                        <input type="submit" class="btn btn-danger btn-lg" style="width: 50%;" value="确认修改" /><a href="/admin_page" class="btn btn-primary btn-lg" style="width: 50%">返回首页</a>
-                    </li>
-                </ul>
-            </form>
+{% block right %}
+	<div class="col-md-10">
+        <h3>修改教师信息</h3>
+        <hr>
+        <div class="container">
+            <div class="btn-group">
+                <form action="/admin_updateTeacher/{{result.id}}" method="post">
+                    <ul class="list-group col-md-6  col-xs-6 col-md-offset-1 col-xs-offset-1">
+                        <li class="list-group-item" style="width: 555px;">
+                            <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                                <span class="input-group-addon">账号</span>
+                                <input type="text" class="form-control input-lg" name="username" value="{{result.username}}"/>
+                            </div>
+                        </li>
+                        <li class="list-group-item" style="width: 555px;">
+                            <div class="input-group col-md-8 col-md-offset-2  col-xs-8 col-xs-offset-2">
+                                <span class="input-group-addon">密码</span>
+                                <input type="text" class="form-control input-lg" name="password" value="{{result.password}}"/>
+                            </div>
+                        </li>
+                                            <li class="list-group-item" style="width: 555px;">
+                            <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                                <span class="input-group-addon">姓名</span>
+                                <input type="text" class="form-control input-lg" name="xm" value="{{result.xm}}"/>
+                            </div>
+                        </li>
+                        <li class="list-group-item" style="width: 555px;">
+                            <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                                {% if result.gender == 1 %}
+                                    <label class="radio-inline">
+                                        <input type="radio" name="gender"  value="1" checked> 男
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="gender" value="0"> 女
+                                    </label>
+                                {% else %}
+                                    <label class="radio-inline">
+                                    <input type="radio" name="gender"  value="1"> 男
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="gender" value="0" checked> 女
+                                    </label>
+                                {% endif %}
+                            </div>
+                        </li>
+                        <li class="list-group-item" style="width: 555px;">
+                            <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                                <span class="input-group-addon">Q Q</span>
+                                <input type="text" class="form-control input-lg" name="qq" value="{{result.qq}}"/>
+                            </div>
+                        </li>
+                        <li class="list-group-item" style="width: 555px;">
+                            <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                                <span class="input-group-addon">邮箱</span>
+                                <input type="email" class="form-control input-lg" name="email" value="{{result.email}}"/>
+                            </div>
+                        </li>
+                        <li class="list-group-item" style="width: 555px;">
+                            <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                                <span class="input-group-addon">地址</span>
+                                <input type="text" class="form-control input-lg" name="address" value="{{result.address}}"/>
+                            </div>
+                        </li>
+                        <li class="list-group-item" style="width: 555px;">
+                            <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+                                <span class="input-group-addon">电话</span>
+                                <input type="text" class="form-control input-lg" name="phone" value="{{result.phone}}"/>
+                            </div>
+                        </li>
+                        <li class="list-group-item" style="width: 555px;">
+                            <input type="submit" class="btn btn-danger btn-lg" style="width: 50%;" value="确认修改" /><a href="/admin_teacherlist" class="btn btn-primary btn-lg" style="width: 50%">返回上一页</a>
+                        </li>
+                    </ul>
+                </form>
+            </div>
         </div>
-    </div>
-</div>
+	</div>
 {% endblock %}

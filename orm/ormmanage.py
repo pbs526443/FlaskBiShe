@@ -282,7 +282,7 @@ def checkTeacherFinance():
 # 查询单个教师工资信息
 def checkTeacherFinance1(id):
     try:
-        result = model.collection1.find(json.loads(model.fjson(userid=id).f10))
+        result = model.collection1.find_one(json_util.loads(model.fjson(_id=id).f4))
         if result:
             return result
         else:
