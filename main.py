@@ -22,7 +22,7 @@ def home_page():
     content1 = magen.checkContent3()
     Leavingschool = magen.checkLeavingschool1(userid)
     print(result2,userid,"++++++++++++++")
-    return render_template("home_page.html",finance=result2,Leavingschool = Leavingschool,name=username,content=content,content1=content1)
+    return render_template("home_page.html",finance=result2,Leavingschool = Leavingschool,uname=username,content=content,content1=content1)
 
 # 用户修改密码
 @app.route("/user_updatepassword",methods=["GET","POST"])
@@ -40,10 +40,11 @@ def user_updatepassword():
 # 用户个人中心
 @app.route("/user_personal",methods=["GET","POST"])
 def user_personal():
+    username = request.cookies.get("username")
     id = request.cookies.get("userid")
     if request.method == "GET":
         result = magen.checkUser1(id)
-        return render_template("user_personal.html",result=result)
+        return render_template("user_personal.html",result=result,uname=username)
     elif request.method == "POST":
         xm = request.form["xm"]
         gender = request.form['gender']
@@ -57,14 +58,16 @@ def user_personal():
 # 用户修改成功
 @app.route("/user_personal_success")
 def user_personal_success():
-    return render_template("user_personal_success.html")
+    username = request.cookies.get("username")
+    return render_template("user_personal_success.html",uname=username)
 
 # 用户申请离校
 @app.route("/user_addLeavingschool",methods=["POST","GET"])
 def user_addLeavingschool():
+    username = request.cookies.get("username")
     userid = request.cookies.get("userid")
     if request.method == "GET":
-        return render_template("user_addLeavingschool.html")
+        return render_template("user_addLeavingschool.html",name=username)
     elif request.method == "POST":
         user_liyou = request.form['user_liyou']
         radio = 0
@@ -82,7 +85,7 @@ def teacher_page():
     content1 = magen.checkContent3()
     teachercontent = magen.checkContent4(teacherid)
     Leavingschool = magen.checkLeavingschool2(teacherid)
-    return render_template('teacher_page.html',Leavingschool=Leavingschool,name=teachername,finance=result,content=content,content1=content1,teachercontent=teachercontent)
+    return render_template('teacher_page.html',Leavingschool=Leavingschool,tname=teachername,finance=result,content=content,content1=content1,teachercontent=teachercontent)
 
 # 教师修改密码
 @app.route("/teacher_updatepassword",methods=["GET","POST"])
@@ -100,15 +103,17 @@ def teacher_updatepassword():
 # 教师修改成功
 @app.route("/teacher_personal_success")
 def teacher_personal_success():
-    return render_template("teacher_personal_success.html")
+    teachername = request.cookies.get("teachername")
+    return render_template("teacher_personal_success.html",tname=teachername)
 
 # 教师个人中心
 @app.route("/teacher_personal",methods=["GET","POST"])
 def teacher_personal():
+    teachername = request.cookies.get("teachername")
     id = request.cookies.get("teacherid")
     if request.method == "GET":
         result = magen.checkTeacher1(id)
-        return render_template("teacher_personal.html",result=result)
+        return render_template("teacher_personal.html",result=result,tname=teachername)
     elif request.method == "POST":
         xm = request.form["xm"]
         gender = request.form['gender']
@@ -132,8 +137,9 @@ def teacher_addContent():
 @app.route("/teacher_updateContent/<id>",methods=["POST","GET"])
 def teacher_updateContent(id):
     if request.method == "GET":
+        teachername = request.cookies.get("teachername")
         result = magen.checkContent1(id)
-        return render_template("teacher_updateContent.html",result=result)
+        return render_template("teacher_updateContent.html",result=result,tname=teachername)
     elif request.method == "POST":
         tid = request.cookies.get("teacherid")
         content = request.form['content']

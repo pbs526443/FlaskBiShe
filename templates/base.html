@@ -30,7 +30,31 @@
 					<a class="navbar-brand" href="#"><h1 style="margin: 0px">统一信息门户</h1></a>
 				</div>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#"><h3 style="margin: 0px;margin-top: 5px"><span class="glyphicon glyphicon-user"></span> {{name}}</h3></a></li>
+					{% if name %}
+						<li>
+							<a href="#">
+								<h3 style="margin: 0px;margin-top: 5px">
+									<span class="glyphicon glyphicon-user"></span> {{name}}
+								</h3>
+							</a>
+						</li>
+					{% elif uname %}
+						<li>
+							<a href="/user_personal">
+								<h3 style="margin: 0px;margin-top: 5px">
+									<span class="glyphicon glyphicon-user"></span> {{uname}}
+								</h3>
+							</a>
+						</li>
+					{% elif tname %}
+					<li>
+						<a href="/teacher_personal">
+							<h3 style="margin: 0px;margin-top: 5px">
+								<span class="glyphicon glyphicon-user"></span> {{tname}}
+							</h3>
+						</a>
+					</li>
+					{% endif %}
 					<li><a href="/"><h3 style="margin: 0px;margin-top: 5px"><span class="glyphicon glyphicon-log-in"></span> 退出登录</h3></a></li>
 				</ul>
 			</div>
