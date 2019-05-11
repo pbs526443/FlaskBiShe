@@ -290,6 +290,18 @@ def checkTeacherFinance1(id):
     except Exception as e:
         print(e)
 
+# 教师查看自己工资信息
+def checkTeacherFinance2(id):
+    try:
+        result = model.collection1.find(json.loads(model.fjson(userid=id).f10))
+        if result:
+            return result
+        else:
+            return None
+    except Exception as e:
+        print(e)
+
+
 # 添加用户
 def addUser(username,password,xm,gender,qq,email,address,phone,tid):
     try:

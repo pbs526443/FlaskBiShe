@@ -1,0 +1,58 @@
+{% extends "home_base.html" %}
+{% block left %}
+<ul class="nav nav-pills nav-stacked text-center">
+	<hr>
+	<li role="presentation" ><a href="/teacher_page">公告信息</a></li>
+	<hr>
+	<li role="presentation" ><a href="/teacher_financelist">我的工资</a></li>
+	<hr>
+	<li role="presentation" ><a href="/teacher_leavingschoollist">留校列表</a></li>
+	<hr>
+	<li role="presentation" class="active"><a href="/teacher_Contenlist">我的公告</a></li>
+	<hr>
+	<li role="presentation"><a href="/teacher_personal">个人中心</a></li>
+	<li role="presentation" ><a href="/teacher_updatepassword1">修改密码</a></li>
+</ul>
+{% endblock %}
+{% block right %}
+	<div class="col-md-10">
+		<div class="col-md-6 col-xs-6">
+            <form action="/teacher_addContent" method="post">
+                <ul class="list-group">
+                    <li class="list-group-item text-center">
+                        <h1>发布公告</h1>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="input-group-addon">内容</span>
+                        <textarea name="content" class="form-control" rows="10"></textarea>
+                    </li>
+                    <li class="list-group-item">
+                        <input type="submit" class="btn btn-danger btn-lg" style="width: 100%;" value="发布" />
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <div class="col-md-6 col-xs-6">
+            <div class="panel panel-default text-center">
+                <div class="panel-heading">
+                    <h1>我的公告列表</h1>
+                </div>
+                {% if teachercontent %}
+                    {% for result in teachercontent %}
+                    <div class="panel-body">
+                        <small>{{result.content}}</small>
+                    </div>
+                    <div class="panel-footer text-right">
+                        <a href="/teacher_updateContent/{{result._id}}" class="btn btn-info" style="width: 49%">修改</a>
+                        <a href="/teacher_deleteContent/{{result._id}}" class="btn btn-danger" style="width: 49%">删除</a>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="panel panel-primary">
+                        <div class="panel-heading"> <h2>没有历史公告</h2> </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+	</div>
+{% endblock %}

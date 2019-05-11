@@ -15,16 +15,9 @@ app.debug = True
 @app.route('/home_page')
 def home_page():
     username = request.cookies.get("username")
-    userid = request.cookies.get("userid")
-    userid = int(userid)
-    result2 = magen.checkUserFinance1(userid)
     content = magen.checkContent2()
     content1 = magen.checkContent3()
-    Leavingschool = magen.checkLeavingschool1(userid)
-    for result in Leavingschool:
-        xm = magen.checkTeacher1(result.tid).xm
-        result.tname = xm
-    return render_template("home_page.html",finance=result2,Leavingschool = Leavingschool,uname=username,content=content,content1=content1)
+    return render_template("home_page.html",uname=username,content=content,content1=content1)
 
 # 我的学费界面
 @app.route('/user_financelist')
@@ -107,9 +100,42 @@ def teacher_page():
     result = magen.checkTeacherFinance1(teacherid)
     content = magen.checkContent2()
     content1 = magen.checkContent3()
-    teachercontent = magen.checkContent4(teacherid)
     Leavingschool = magen.checkLeavingschool2(teacherid)
-    return render_template('teacher_page.html',Leavingschool=Leavingschool,tname=teachername,finance=result,content=content,content1=content1,teachercontent=teachercontent)
+    return render_template('teacher_page.html',Leavingschool=Leavingschool,tname=teachername,finance=result,content=content,content1=content1)
+
+# 我的工资页面
+@app.route("/teacher_financelist")
+def teacher_financelist():
+    teachername = request.cookies.get("teachername")
+    teacherid = request.cookies.get("teacherid")
+    teacherid = int(teacherid)
+    finance = magen.checkTeacherFinance2(teacherid)
+    print(finance,"+++++++++++++")
+    return render_template('teacher_financelist.html',tname=teachername,finance=finance)
+
+# 教师 留校列表页面
+@app.route("/teacher_leavingschoollist")
+def teacher_leavingschoollist():
+    teachername = request.cookies.get("teachername")
+    teacherid = request.cookies.get("teacherid")
+    teacherid = int(teacherid)
+    Leavingschool = magen.checkLeavingschool2(teacherid)
+    return render_template('teacher_leavingschoollist.html',tname=teachername,Leavingschool=Leavingschool)
+
+# 教师公告页面
+@app.route("/teacher_Contenlist")
+def teacher_Contenlist():
+    teachername = request.cookies.get("teachername")
+    teacherid = request.cookies.get("teacherid")
+    teacherid = int(teacherid)
+    teachercontent = magen.checkContent4(teacherid)
+    return render_template('teacher_Contenlist.html',tname=teachername,teachercontent=teachercontent)
+
+# 教师修改密码
+@app.route("/teacher_updatepassword1")
+def teacher_updatepassword1():
+    teachername = request.cookies.get("teachername")
+    return render_template('teacher_updatepassword.html',tname=teachername)
 
 # 教师修改密码
 @app.route("/teacher_updatepassword",methods=["GET","POST"])
@@ -119,16 +145,10 @@ def teacher_updatepassword():
         password = request.form["password"]
         password1 = request.form["password1"]
         if password1 == password:
-            return make_response(redirect('/teacher_page'))
+            return make_response(redirect('/teacher_updatepassword1'))
         else:
             magen.updateTeacherpassword(id,password1)
             return make_response(redirect('/'))
-
-# 教师修改成功
-@app.route("/teacher_personal_success")
-def teacher_personal_success():
-    teachername = request.cookies.get("teachername")
-    return render_template("teacher_personal_success.html",tname=teachername)
 
 # 教师个人中心
 @app.route("/teacher_personal",methods=["GET","POST"])
@@ -146,7 +166,7 @@ def teacher_personal():
         address = request.form['address']
         phone = request.form['phone']
         magen.updateTeacher1(id,xm,gender,qq,email,address,phone)
-        return make_response(redirect('/teacher_personal_success'))
+        return make_response(redirect('/teacher_personal'))
 
 # 教师发布公告
 @app.route("/teacher_addContent",methods=["POST","GET"])
@@ -168,7 +188,7 @@ def teacher_updateContent(id):
         tid = request.cookies.get("teacherid")
         content = request.form['content']
         magen.updateContent(id,content,tid)
-        return make_response(redirect('/teacher_page'))
+        return make_response(redirect('/teacher_Contenlist'))
 
 # 教师删除公告信息
 @app.route("/teacher_deleteContent/<id>")
@@ -181,14 +201,14 @@ def teacher_deleteContent(id):
 def teacher_y_updateLeavingschool(id):
     radio = 1
     magen.updateLeavingschoo2(id,radio)
-    return make_response(redirect('/teacher_page'))
+    return make_response(redirect('/teacher_leavingschoollist'))
 
 # 教师审核学生留校不通过
 @app.route("/teacher_n_updateLeavingschool/<id>")
 def teacher_n_updateLeavingschool(id):
     radio = 2
     magen.updateLeavingschoo2(id,radio)
-    return make_response(redirect('/teacher_page'))
+    return make_response(redirect('/teacher_leavingschoollist'))
 
 # 登录界面
 @app.route("/",methods=["POST","GET"])
