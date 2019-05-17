@@ -67,6 +67,7 @@ class fjson:
         self.f4 = json_util.dumps({"_id": ObjectId(_id)})
         self.f5 = json.dumps({"user_name":xm,"user_liyou":user_liyou,"user_ztai":gender,"uid":int(userid),"tid":tid})
         self.f51 = json.dumps({"user_ztai":gender})
+        self.f52 = json.dumps({"user_liyou": user_liyou})
         self.f6 = json.dumps({"password":password})
         self.f7 = json.dumps({"xm": xm, "gender": gender,"qq": qq,"email": email,"address": address,"phone": phone})
         self.f8 = json.dumps({"xm":xm})

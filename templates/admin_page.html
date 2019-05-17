@@ -29,7 +29,7 @@
 			<div class="panel-heading">
 				<form action="/admin_checkuser" method="post">
 					<div class="input-group col-md-6 col-md-offset-6 col-xs-6 col-xs-offset-6">
-						<input type="text" class="form-control input-lg" name="username" placeholder="请输入账号"/>
+						<input type="text" class="form-control input-lg" name="username" required oninvalid="setCustomValidity('账号不能为空')" oninput="setCustomValidity('')" placeholder="请输入账号"/>
 						<span class="input-group-btn">
 							<input type="submit" class="btn btn-danger btn-lg" name="提交" />
 						</span>

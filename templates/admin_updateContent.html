@@ -34,13 +34,13 @@
                         <li class="list-group-item" style="width: 555px;">
                             <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
                                 <span class="input-group-addon">内容
-                                <textarea name="content" class="form-control" cols="30" rows="10" >{{result.content}}</textarea></span>
+                                <textarea name="content" class="form-control" cols="30" rows="10" required oninvalid="setCustomValidity('内容不能为空')" oninput="setCustomValidity('')" >{{result.content}}</textarea></span>
                             </div>
                         </li>
                         <li class="list-group-item" style="width: 555px;">
                             <div class="input-group col-md-8 col-md-offset-2  col-xs-8 col-xs-offset-2">
                                 <span class="input-group-addon">I &nbsp; D</span>
-                                <input type="text" class="form-control input-lg" name="tid" value="{{result.tid}}"/>
+                                <input type="text" class="form-control input-lg" required oninvalid="setCustomValidity('教师ID不能为空')" oninput="setCustomValidity('')" name="tid" value="{{result.tid}}"/>
                             </div>
                         </li>
                         <li class="list-group-item" style="width: 555px;">

@@ -34,7 +34,7 @@
                     <li class="list-group-item" style="width: 555px;">
                         <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
                             <span class="input-group-addon">理由</span>
-                            <textarea name="user_liyou" class="form-control" cols="30" rows="10">{{result.user_liyou}}</textarea>
+                            <textarea name="user_liyou" class="form-control" required oninvalid="setCustomValidity('理由不能为空')" oninput="setCustomValidity('')" cols="30" rows="10">{{result.user_liyou}}</textarea>
                         </div>
                     </li>
                     <li class="list-group-item" style="width: 555px;">
@@ -81,7 +81,7 @@
                     <li class="list-group-item" style="width: 555px;">
                         <div class="input-group col-md-8 col-md-offset-2  col-xs-8 col-xs-offset-2">
                             <span class="input-group-addon">I &nbsp; D</span>
-                            <input type="text" class="form-control input-lg" name="userid" value="{{result.uid}}"/>
+                            <input type="text" class="form-control input-lg" required oninvalid="setCustomValidity('学生ID不能为空')" oninput="setCustomValidity('')" name="userid" value="{{result.uid}}"/>
                         </div>
                     </li>
                     <li class="list-group-item" style="width: 555px;">

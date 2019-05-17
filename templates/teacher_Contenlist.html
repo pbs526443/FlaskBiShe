@@ -24,7 +24,7 @@
                     </li>
                     <li class="list-group-item">
                         <span class="input-group-addon">内容</span>
-                        <textarea name="content" class="form-control" rows="10"></textarea>
+                        <textarea name="content" required oninvalid="setCustomValidity('内容不能为空')" oninput="setCustomValidity('')" class="form-control" rows="10"></textarea>
                     </li>
                     <li class="list-group-item">
                         <input type="submit" class="btn btn-danger btn-lg" style="width: 100%;" value="发布" />

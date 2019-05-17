@@ -34,19 +34,19 @@
                         <li class="list-group-item" style="width: 555px;">
                             <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
                                 <span class="input-group-addon">账号</span>
-                                <input type="text" class="form-control input-lg" name="username" value="{{result.username}}"/>
+                                <input type="text" class="form-control input-lg" name="username" required oninvalid="setCustomValidity('账号不能为空')" oninput="setCustomValidity('')" value="{{result.username}}"/>
                             </div>
                         </li>
                         <li class="list-group-item" style="width: 555px;">
                             <div class="input-group col-md-8 col-md-offset-2  col-xs-8 col-xs-offset-2">
                                 <span class="input-group-addon">密码</span>
-                                <input type="text" class="form-control input-lg" name="password" value="{{result.password}}"/>
+                                <input type="text" class="form-control input-lg" required oninvalid="setCustomValidity('密码不能为空')" oninput="setCustomValidity('')" name="password" value="{{result.password}}"/>
                             </div>
                         </li>
                                             <li class="list-group-item" style="width: 555px;">
                             <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
                                 <span class="input-group-addon">姓名</span>
-                                <input type="text" class="form-control input-lg" name="xm" value="{{result.xm}}"/>
+                                <input type="text" class="form-control input-lg" required oninvalid="setCustomValidity('姓名不能为空')" oninput="setCustomValidity('')" name="xm" value="{{result.xm}}"/>
                             </div>
                         </li>
                         <li class="list-group-item" style="width: 555px;">

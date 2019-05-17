@@ -34,31 +34,31 @@
                         <li class="list-group-item" style="width: 555px;">
                             <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
                                 <span class="input-group-addon">学费</span>
-                                <input type="text" class="form-control input-lg" name="user_xuefei" value="{{result.user_xuefei}}"/>
+                                <input type="text" class="form-control input-lg" name="user_xuefei" required oninvalid="setCustomValidity('学费不能为空')" oninput="setCustomValidity('')" value="{{result.user_xuefei}}"/>
                             </div>
                         </li>
                         <li class="list-group-item" style="width: 555px;">
                             <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
                                 <span class="input-group-addon">书费</span>
-                                <input type="text" class="form-control input-lg" name="user_shufei" value="{{result.user_shufei}}"/>
+                                <input type="text" class="form-control input-lg" name="user_shufei" required oninvalid="setCustomValidity('书费不能为空')" oninput="setCustomValidity('')" value="{{result.user_shufei}}"/>
                             </div>
                         </li>
                         <li class="list-group-item" style="width: 555px;">
                             <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
                                 <span class="input-group-addon">住宿费</span>
-                                <input type="text" class="form-control input-lg" name="user_zhusufei" value="{{result.user_zhusufei}}"/>
+                                <input type="text" class="form-control input-lg" name="user_zhusufei" required oninvalid="setCustomValidity('住宿费不能为空')" oninput="setCustomValidity('')" value="{{result.user_zhusufei}}"/>
                             </div>
                         </li>
                         <li class="list-group-item" style="width: 555px;">
                             <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
                                 <span class="input-group-addon">已支付</span>
-                                <input type="text" class="form-control input-lg" name="user_zhifu" value="{{result.user_zhifu}}"/>
+                                <input type="text" class="form-control input-lg" name="user_zhifu" required oninvalid="setCustomValidity('已支付不能为空')" oninput="setCustomValidity('')" value="{{result.user_zhifu}}"/>
                             </div>
                         </li>
                         <li class="list-group-item" style="width: 555px;">
                             <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
                                 <span class="input-group-addon">用户ID</span>
-                                <input type="text" class="form-control input-lg" name="userid" value="{{result.userid}}"/>
+                                <input type="text" class="form-control input-lg" required oninvalid="setCustomValidity('用户ID不能为空')" oninput="setCustomValidity('')" name="userid" value="{{result.userid}}"/>
                             </div>
                         </li>
                         <li class="list-group-item" style="width: 555px;">

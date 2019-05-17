@@ -37,31 +37,31 @@
                         <li class="list-group-item" style="width: 555px;">
                             <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
                                 <span class="input-group-addon">基础工资</span>
-                                <input type="text" class="form-control input-lg" name="t_wages" value="{{result.t_wages}}"/>
+                                <input type="text" class="form-control input-lg" name="t_wages" required oninvalid="setCustomValidity('基础工资不能为空')" oninput="setCustomValidity('')" value="{{result.t_wages}}"/>
                             </div>
                         </li>
                         <li class="list-group-item" style="width: 555px;">
                             <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
                                 <span class="input-group-addon">补贴</span>
-                                <input type="text" class="form-control input-lg" name="t_subsidy" value="{{result.t_subsidy}}"/>
+                                <input type="text" class="form-control input-lg" name="t_subsidy" required oninvalid="setCustomValidity('补贴不能为空')" oninput="setCustomValidity('')" value="{{result.t_subsidy}}"/>
                             </div>
                         </li>
                         <li class="list-group-item" style="width: 555px;">
                             <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
                                 <span class="input-group-addon">津贴</span>
-                                <input type="text" class="form-control input-lg" name="t_allowance" value="{{result.t_allowance}}"/>
+                                <input type="text" class="form-control input-lg" name="t_allowance" required oninvalid="setCustomValidity('津贴不能为空')" oninput="setCustomValidity('')" value="{{result.t_allowance}}"/>
                             </div>
                         </li>
                          <li class="list-group-item" style="width: 555px;">
                             <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
                                 <span class="input-group-addon">日期</span>
-                                <input type="date" class="form-control input-lg" name="t_data" value="{{result.t_data}}"/>
+                                <input type="date" class="form-control input-lg" required oninvalid="setCustomValidity('日期不能为空')" oninput="setCustomValidity('')" name="t_data" value="{{result.t_data}}"/>
                             </div>
                         </li>
                         <li class="list-group-item" style="width: 555px;">
                             <div class="input-group col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
                                 <span class="input-group-addon">&nbsp;&nbsp;I &nbsp;&nbsp; D&nbsp;</span>
-                                <input type="text" class="form-control input-lg" name="userid" value="{{result.tid}}"/>
+                                <input type="text" class="form-control input-lg" name="userid" required oninvalid="setCustomValidity('教师ID不能为空')" oninput="setCustomValidity('')" value="{{result.tid}}"/>
                             </div>
                         </li>
                         <li class="list-group-item" style="width: 555px;">

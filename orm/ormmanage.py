@@ -102,6 +102,19 @@ def checkUser1(id):
     finally:
         session.close()
 
+# 根据id查询学生留校信息
+def checkLeavingschool(id):
+    try:
+        result= session.query(model.Leavingschool).filter(model.Leavingschool.id == id).first()
+        if result:
+            return result
+        else:
+            return None
+    except Exception as e:
+        print(e)
+    finally:
+        session.close()
+
 # 根据id查询教师
 def checkTeacher1(id):
     try:
@@ -129,6 +142,35 @@ def checkUser2(username):
     finally:
         session.close()
 
+# 根据账号查询教师
+def checkTeacher2(username):
+    try:
+        username = '%' + username + '%'
+        result= session.query(model.Teacher).filter(model.Teacher.username.like(username)).all()
+        if result:
+            return result
+        else:
+            return None
+    except Exception as e:
+        print(e)
+    finally:
+        session.close()
+
+# 根据姓名查询学生留校信息
+def checkUserLeavingschool(xm):
+    try:
+        xm = '%' + xm + '%'
+        result= session.query(model.Leavingschool).filter(model.Leavingschool.user_name.like(xm)).all()
+        if result:
+            return result
+        else:
+            return None
+    except Exception as e:
+        print(e)
+    finally:
+        session.close()
+
+
 # 查询个人财务信息
 def checkUserFinance1(userid):
     try:
@@ -140,7 +182,7 @@ def checkUserFinance1(userid):
     except Exception as e:
         print(e)
 
-# 根据xm查找信息
+# 根据xm查找学生学费信息
 def checkUserFinance_xm(xm):
     try:
         result = model.collection.find({'xm':re.compile(xm)})
@@ -151,6 +193,27 @@ def checkUserFinance_xm(xm):
     except Exception as e:
         print(e)
 
+# 根据xm查找教师工资信息
+def checkTeacherFinance_xm(xm):
+    try:
+        result = model.collection1.find({'xm':re.compile(xm)})
+        if result:
+            return result
+        else:
+            return None
+    except Exception as e:
+        print(e)
+
+# 根据xm查找公告信息信息
+def checkContent_xm(xm):
+    try:
+        result = model.content.find({'xm':re.compile(xm)})
+        if result:
+            return result
+        else:
+            return None
+    except Exception as e:
+        print(e)
 
 # 查询所有公告信息
 def checkContent():
@@ -502,6 +565,18 @@ def updateUserpassword(id,password):
     try:
         result = session.query(model.User).filter(model.User.id == id).update(
             json.loads( model.fjson(password=password).f6))
+        session.commit()
+        return result
+    except Exception as e:
+        print(e)
+    finally:
+        session.close()
+
+# 学生修改留校理由
+def updateUserLeavingschool(id,user_liyou):
+    try:
+        result = session.query(model.Leavingschool).filter(model.Leavingschool.id == id).update(
+            json.loads( model.fjson(user_liyou=user_liyou).f52))
         session.commit()
         return result
     except Exception as e:

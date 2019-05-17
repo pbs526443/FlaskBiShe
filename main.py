@@ -28,7 +28,7 @@ def user_financelist():
     finance = magen.checkUserFinance1(userid)
     return render_template("user_financelist.html",finance=finance,uname=username)
 
-# 留校申请界面
+# 学生留校申请界面
 @app.route('/user_leavingschool')
 def user_leavingschool():
     username = request.cookies.get("username")
@@ -58,6 +58,18 @@ def user_updatepassword():
         else:
             magen.updateUserpassword(id,password1)
             return make_response(redirect('/'))
+
+# 学生修改留校
+@app.route("/user_updateLeavingschool/<id>",methods=["POST","GET"])
+def user_updateLeavingschool(id):
+    username = request.cookies.get("username")
+    if request.method == "GET":
+        result = magen.checkLeavingschool(id)
+        return render_template("user_updateLeavingschool.html",result=result,tname=username)
+    elif request.method == "POST":
+        user_liyou = request.form['user_liyou']
+        magen.updateUserLeavingschool(id,user_liyou)
+        return make_response(redirect('/user_leavingschool'))
 
 # 用户个人中心
 @app.route("/user_personal",methods=["GET","POST"])
@@ -318,7 +330,7 @@ def admin_checkuser1(username):
     user = magen.checkUser2(username)
     return render_template("admin_page.html", user=user, name=adminname)
 
-# 按姓名查询学生财务
+# 按姓名查询学生学费
 @app.route("/admin_checkuserfinance",methods=["POST","GET"])
 def admin_checkuserfinance():
     if request.method == "POST":
@@ -330,7 +342,67 @@ def admin_checkuserfinance():
 def admin_checkuserfinance1(xm):
     adminname = request.cookies.get("adminname")
     finance = magen.checkUserFinance_xm(xm)
-    return render_template("admin_checkuserfinance.html", finance=finance, name=adminname)
+    return render_template("admin_userfinancelist.html", finance=finance, name=adminname)
+
+# 按姓名查询学生留校
+@app.route("/admin_checkuserLeaving",methods=["POST","GET"])
+def admin_checkuserLeaving():
+    if request.method == "POST":
+        xm = request.form["xm"]
+        return make_response(redirect('/admin_checkuserLeaving1/' + xm))
+
+# 按姓名查找学生留校信息
+@app.route("/admin_checkuserLeaving1/<xm>")
+def admin_checkuserLeaving1(xm):
+    adminname = request.cookies.get("adminname")
+    Leavingschool = magen.checkUserLeavingschool(xm)
+    for result in Leavingschool:
+        xm = magen.checkTeacher1(result.tid).xm
+        result.tname = xm
+    return render_template("admin_userLeavingschoollist.html", Leavingschool=Leavingschool, name=adminname)
+
+# 按账号查询教师信息
+@app.route("/admin_checkTeacher",methods=["POST","GET"])
+def admin_checkTeacher():
+    if request.method == "POST":
+        username = request.form["username"]
+        return make_response(redirect('/admin_checkTeacher1/' + username))
+
+# 按账号查询教师信息
+@app.route("/admin_checkTeacher1/<username>")
+def admin_checkTeacher1(username):
+    adminname = request.cookies.get("adminname")
+    teacher = magen.checkTeacher2(username)
+    return render_template("admin_teacherlist.html", teacher=teacher, name=adminname)
+
+# 按姓名查询教师工资信息
+@app.route("/admin_checkTeacherFinance",methods=["POST","GET"])
+def admin_checkTeacherFinance():
+    if request.method == "POST":
+        xm = request.form["xm"]
+        return make_response(redirect('/admin_checkTeacherFinance1/' + xm))
+
+# 按姓名查询教师工资信息
+@app.route("/admin_checkTeacherFinance1/<xm>")
+def admin_checkTeacherFinance1(xm):
+    adminname = request.cookies.get("adminname")
+    TeacherFinance = magen.checkTeacherFinance_xm(xm)
+    return render_template("admin_TeacherFinancelist.html", TeacherFinance=TeacherFinance, name=adminname)
+
+# 按姓名查询公告信息
+@app.route("/admin_checkContent",methods=["POST","GET"])
+def admin_checkContent():
+    if request.method == "POST":
+        xm = request.form["xm"]
+        return make_response(redirect('/admin_checkContent1/' + xm))
+
+# 按姓名查询公告信息
+@app.route("/admin_checkContent1/<xm>")
+def admin_checkContent1(xm):
+    adminname = request.cookies.get("adminname")
+    content = magen.checkContent_xm(xm)
+    return render_template("addmin_Contentlist.html", content=content, name=adminname)
+
 
 # 查看用户信息
 @app.route("/admin_userdetails/<id>",methods=["GET","POST"])
